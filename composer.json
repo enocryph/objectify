@@ -1,0 +1,22 @@
+{
+    "name": "enocryph/objectify",
+    "description": "Object wrapper for php data types",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Enocryph",
+            "email": "enocryph@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": { "Objectify\\": "src/" },
+        "exclude-from-classmap": [
+            "/tests/"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6"
+    }
+}
