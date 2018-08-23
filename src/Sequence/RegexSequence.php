@@ -5,6 +5,10 @@ namespace Objectify\Sequence;
 
 class RegexSequence extends AbstractRegexSequence
 {
+    private $regex;
+
+    private $matchGroup;
+
     public function getType(): string
     {
         return 'regex';
@@ -15,8 +19,14 @@ class RegexSequence extends AbstractRegexSequence
         $matches = [];
 
         if (preg_match($this->getValidationRegex(), $this->inputSequence, $matches)) {
-            list (, $regex) = $matches;
-            return is_numeric(preg_match($regex, 'nvm'));
+
+            if (isset($matches[2])) {
+                $this->matchGroup = $matches[2];
+            }
+
+            $this->regex = $matches[1];
+
+            return is_numeric(preg_match($matches[1], 'nvm'));
         }
 
         return false;
@@ -27,11 +37,6 @@ class RegexSequence extends AbstractRegexSequence
         return '/(\/.+\/),?([\d]+)?/';
     }
 
-    public function prepare()
-    {
-        return $this;
-    }
-
     public function getInputSequence(): string
     {
         return $this->inputSequence;
@@ -39,11 +44,11 @@ class RegexSequence extends AbstractRegexSequence
 
     public function getRegex(): string
     {
-
+        return $this->regex;
     }
 
     public function getMatchGroup(): int
     {
-
+        return $this->matchGroup;
     }
 }

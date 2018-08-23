@@ -5,9 +5,9 @@ namespace Objectify\Sequence;
 
 class LengthSequence extends AbstractNumericSequence
 {
-    private $from;
+    private $start;
 
-    private $to;
+    private $length;
 
     public function getType(): string
     {
@@ -16,7 +16,13 @@ class LengthSequence extends AbstractNumericSequence
 
     public function isValid(): bool
     {
-        return (is_numeric($this->inputSequence) && is_int((int)$this->inputSequence));
+        $matches = [];
+
+        if (preg_match($this->getValidationRegex(), $this->inputSequence, $matches)) {
+            list(, $this->start, $this->length) = $matches;
+            return true;
+        }
+        return false;
     }
 
     public function getInputSequence(): string
@@ -24,11 +30,9 @@ class LengthSequence extends AbstractNumericSequence
         return $this->inputSequence;
     }
 
-    public function prepare()
+    public function getValidationRegex(): string
     {
-        $this->from = 0;
-        $this->to = 0;
-        return $this;
+        return '/(-?[\'\d\']+)\,\s?(-?[\'\d\']+)/';
     }
 
     public function getFrom(): int

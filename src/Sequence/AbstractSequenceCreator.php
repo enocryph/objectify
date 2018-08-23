@@ -3,6 +3,8 @@
 
 namespace Objectify\Sequence;
 
+use Objectify\Sequence\Exceptions\SequenceException;
+
 abstract class AbstractSequenceCreator
 {
     /**
@@ -23,7 +25,7 @@ abstract class AbstractSequenceCreator
     public function __construct($inputSequence)
     {
         if (is_array($inputSequence)) {
-            $this->inputSequence = implode(',', $this->inputSequence);
+            $this->inputSequence = implode(',', $inputSequence);
         } else {
             $this->inputSequence = $inputSequence;
         }
@@ -35,17 +37,19 @@ abstract class AbstractSequenceCreator
             $sequence = new $sequenceClass($this->inputSequence);
 
             if ($sequence->isValid()) {
-                $sequence->prepare();
                 $this->sequence = $sequence;
             }
         }
 
         if (!$this->sequence) {
-            throw new \Exception('Invalid sequence : ' . $this->inputSequence);
+//            throw new SequenceException('Invalid sequence : ' . $this->inputSequence);
         }
     }
-
-    abstract public function getSequence(): AbstractSequence;
+    
+    public function getSequence(): AbstractSequence
+    {
+        return $this->sequence;
+    }
 
     abstract public function getAvailableSequences(): array;
 }

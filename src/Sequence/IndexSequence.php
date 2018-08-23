@@ -5,9 +5,7 @@ namespace Objectify\Sequence;
 
 class IndexSequence extends AbstractNumericSequence
 {
-    private $from;
-
-    private $to;
+    private $index;
 
     public function getType(): string
     {
@@ -16,7 +14,12 @@ class IndexSequence extends AbstractNumericSequence
 
     public function isValid(): bool
     {
-        return (is_numeric($this->inputSequence) && is_int((int)$this->inputSequence));
+        if (is_numeric($this->inputSequence) && is_int((int)$this->inputSequence)) {
+            $this->index = (int)$this->inputSequence;
+            return true;
+        }
+
+        return false;
     }
 
     public function getInputSequence(): string
@@ -24,20 +27,13 @@ class IndexSequence extends AbstractNumericSequence
         return $this->inputSequence;
     }
 
-    public function prepare()
-    {
-        $this->from = 0;
-        $this->to = 0;
-        return $this;
-    }
-
     public function getFrom(): int
     {
-        return $this->from;
+        return 0;
     }
 
     public function getTo(): int
     {
-        return $this->to;
+        return 0;
     }
 }

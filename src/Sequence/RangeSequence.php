@@ -16,6 +16,18 @@ class RangeSequence extends AbstractNumericSequence
 
     public function isValid(): bool
     {
+        $matches = [];
+
+        if (preg_match($this->getValidationRegex(), $this->inputSequence, $matches)) {
+
+            $this->from = isset($matches[1]) ? $matches[1] : 0;
+            $this->to = isset($matches[2]) ? $matches[2] : 'END';
+
+            if (isset($matches[1]) || isset($matches[2])) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -24,9 +36,9 @@ class RangeSequence extends AbstractNumericSequence
         return $this->inputSequence;
     }
 
-    public function prepare()
+    public function getValidationRegex(): string
     {
-        return $this;
+        return '/(-?[\d]+)?\.{2}(-?[\d]+)?/';
     }
 
     public function getFrom(): int
