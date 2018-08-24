@@ -3,7 +3,9 @@
 
 namespace Objectify\Sequence;
 
-class RangeSequence extends AbstractNumericSequence
+use Objectify\Sequence\Interfaces\NumericSequenceInterface;
+
+class RangeSequence extends BaseSequence implements NumericSequenceInterface
 {
     private $from;
 
@@ -38,7 +40,7 @@ class RangeSequence extends AbstractNumericSequence
 
     public function getValidationRegex(): string
     {
-        return '/(-?[\d]+)?\.{2}(-?[\d]+)?/';
+        return '/^(-?[\d]+)?\.{2}(-?[\d]+)?/';
     }
 
     public function getFrom(): int

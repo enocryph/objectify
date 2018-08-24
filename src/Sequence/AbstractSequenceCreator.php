@@ -13,7 +13,7 @@ abstract class AbstractSequenceCreator
     protected $inputSequence;
 
     /**
-     * @var AbstractSequence
+     * @var BaseSequence
      */
     protected $sequence;
 
@@ -33,7 +33,7 @@ abstract class AbstractSequenceCreator
         foreach ($this->getAvailableSequences() as $sequenceClassName) {
             $sequenceClass = "\Objectify\Sequence\\{$sequenceClassName}Sequence";
 
-            /** @var AbstractSequence $sequence */
+            /** @var BaseSequence $sequence */
             $sequence = new $sequenceClass($this->inputSequence);
 
             if ($sequence->isValid()) {
@@ -42,11 +42,11 @@ abstract class AbstractSequenceCreator
         }
 
         if (!$this->sequence) {
-//            throw new SequenceException('Invalid sequence : ' . $this->inputSequence);
+            throw new SequenceException('Invalid sequence : ' . $this->inputSequence);
         }
     }
     
-    public function getSequence(): AbstractSequence
+    public function getSequence(): BaseSequence
     {
         return $this->sequence;
     }

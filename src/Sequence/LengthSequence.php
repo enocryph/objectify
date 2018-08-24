@@ -3,7 +3,9 @@
 
 namespace Objectify\Sequence;
 
-class LengthSequence extends AbstractNumericSequence
+use Objectify\Sequence\Interfaces\NumericSequenceInterface;
+
+class LengthSequence extends BaseSequence implements NumericSequenceInterface
 {
     private $start;
 
@@ -32,7 +34,7 @@ class LengthSequence extends AbstractNumericSequence
 
     public function getValidationRegex(): string
     {
-        return '/(-?[\'\d\']+)\,\s?(-?[\'\d\']+)/';
+        return '/^(-?[\'\d\']+)\,\s?(-?[\'\d\']+)/';
     }
 
     public function getFrom(): int

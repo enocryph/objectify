@@ -3,7 +3,9 @@
 
 namespace Objectify\Sequence;
 
-class RegexSequence extends AbstractRegexSequence
+use Objectify\Sequence\Interfaces\RegexSequenceInterface;
+
+class RegexSequence extends BaseSequence implements RegexSequenceInterface
 {
     private $regex;
 
@@ -34,7 +36,7 @@ class RegexSequence extends AbstractRegexSequence
 
     public function getValidationRegex(): string
     {
-        return '/(\/.+\/),?([\d]+)?/';
+        return '/^(\/.+\/),?([\d]+)?/';
     }
 
     public function getInputSequence(): string

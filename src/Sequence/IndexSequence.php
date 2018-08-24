@@ -3,7 +3,9 @@
 
 namespace Objectify\Sequence;
 
-class IndexSequence extends AbstractNumericSequence
+use Objectify\Sequence\Interfaces\NumericSequenceInterface;
+
+class IndexSequence extends BaseSequence implements NumericSequenceInterface
 {
     private $index;
 

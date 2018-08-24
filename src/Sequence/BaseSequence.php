@@ -3,7 +3,9 @@
 
 namespace Objectify\Sequence;
 
-abstract class AbstractSequence
+use Objectify\Sequence\Interfaces\SequenceInterface;
+
+abstract class BaseSequence implements SequenceInterface
 {
     protected $inputSequence;
 
@@ -16,8 +18,4 @@ abstract class AbstractSequence
     {
         return $this->inputSequence;
     }
-
-    abstract public function getType(): string;
-
-    abstract public function isValid(): bool;
 }
