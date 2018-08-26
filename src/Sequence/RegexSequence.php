@@ -36,7 +36,7 @@ class RegexSequence extends BaseSequence implements RegexSequenceInterface
 
     public function getValidationRegex(): string
     {
-        return '/^(\/.+\/),?([\d]+)?/';
+        return '/^(\/.+\/),?(\s?[\d]+)?/';
     }
 
     public function getInputSequence(): string
