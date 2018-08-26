@@ -39,11 +39,11 @@ class LengthSequence extends BaseSequence implements NumericSequenceInterface
 
     public function getFrom(): int
     {
-        return $this->from;
+        return $this->start;
     }
 
-    public function getTo(): int
+    public function getLength(): int
     {
-        return $this->to;
+        return $this->length;
     }
 }

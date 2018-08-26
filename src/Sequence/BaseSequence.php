@@ -18,4 +18,8 @@ abstract class BaseSequence implements SequenceInterface
     {
         return $this->inputSequence;
     }
+
+    public function isNegativeNumber($number): bool {
+        return $number < 0;
+    }
 }

@@ -7,5 +7,5 @@ interface NumericSequenceInterface extends SequenceInterface
 {
     public function getFrom(): int;
 
-    public function getTo(): int;
+    public function getLength();
 }

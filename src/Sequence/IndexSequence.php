@@ -31,11 +31,11 @@ class IndexSequence extends BaseSequence implements NumericSequenceInterface
 
     public function getFrom(): int
     {
-        return 0;
+        return $this->index;
     }
 
-    public function getTo(): int
+    public function getLength(): int
     {
-        return 0;
+        return 1;
     }
 }

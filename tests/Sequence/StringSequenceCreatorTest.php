@@ -12,60 +12,95 @@ class StringSequenceCreatorTest extends TestCase
     {
         $sequence = new StringSequenceCreator('2..3');
         $this->assertEquals('range', $sequence->getSequence()->getType());
+        $this->assertSame(2, $sequence->getSequence()->getFrom());
+        $this->assertSame(2, $sequence->getSequence()->getLength());
 
         $sequence = new StringSequenceCreator('..3');
         $this->assertEquals('range', $sequence->getSequence()->getType());
+        $this->assertSame(0, $sequence->getSequence()->getFrom());
+        $this->assertSame(4, $sequence->getSequence()->getLength());
 
         $sequence = new StringSequenceCreator('2..');
         $this->assertEquals('range', $sequence->getSequence()->getType());
+        $this->assertSame(2, $sequence->getSequence()->getFrom());
+        $this->assertSame(null, $sequence->getSequence()->getLength());
 
         $sequence = new StringSequenceCreator('-2..-3');
         $this->assertEquals('range', $sequence->getSequence()->getType());
+        $this->assertSame(-2, $sequence->getSequence()->getFrom());
+        $this->assertSame(-3, $sequence->getSequence()->getLength());
 
         $sequence = new StringSequenceCreator('..-3');
         $this->assertEquals('range', $sequence->getSequence()->getType());
+        $this->assertSame(0, $sequence->getSequence()->getFrom());
+        $this->assertSame(-3, $sequence->getSequence()->getLength());
 
         $sequence = new StringSequenceCreator('-2..');
         $this->assertEquals('range', $sequence->getSequence()->getType());
+        $this->assertSame(-2, $sequence->getSequence()->getFrom());
+        $this->assertSame(null, $sequence->getSequence()->getLength());
+
+        $sequence = new StringSequenceCreator('-3..-1');
+        $this->assertEquals('range', $sequence->getSequence()->getType());
+        $this->assertSame(-3, $sequence->getSequence()->getFrom());
+        $this->assertSame(-1, $sequence->getSequence()->getLength());
     }
 
     public function testLength()
     {
         $sequence = new StringSequenceCreator('2,3');
         $this->assertEquals('length', $sequence->getSequence()->getType());
+        $this->assertSame(2, $sequence->getSequence()->getFrom());
+        $this->assertSame(3, $sequence->getSequence()->getLength());
 
         $sequence = new StringSequenceCreator([2, 4]);
         $this->assertEquals('length', $sequence->getSequence()->getType());
+        $this->assertSame(2, $sequence->getSequence()->getFrom());
+        $this->assertSame(4, $sequence->getSequence()->getLength());
 
         $sequence = new StringSequenceCreator([2, -3]);
         $this->assertEquals('length', $sequence->getSequence()->getType());
+        $this->assertSame(2, $sequence->getSequence()->getFrom());
+        $this->assertSame(-3, $sequence->getSequence()->getLength());
 
         $sequence = new StringSequenceCreator([-2, 3]);
         $this->assertEquals('length', $sequence->getSequence()->getType());
+        $this->assertSame(-2, $sequence->getSequence()->getFrom());
+        $this->assertSame(3, $sequence->getSequence()->getLength());
 
         $sequence = new StringSequenceCreator([-2, -7]);
         $this->assertEquals('length', $sequence->getSequence()->getType());
+        $this->assertSame(-2, $sequence->getSequence()->getFrom());
+        $this->assertSame(-7, $sequence->getSequence()->getLength());
 
         $sequence = new StringSequenceCreator('-2, 3');
         $this->assertEquals('length', $sequence->getSequence()->getType());
+        $this->assertSame(-2, $sequence->getSequence()->getFrom());
+        $this->assertSame(3, $sequence->getSequence()->getLength());
 
         $sequence = new StringSequenceCreator('-2, -7');
         $this->assertEquals('length', $sequence->getSequence()->getType());
+        $this->assertSame(-2, $sequence->getSequence()->getFrom());
+        $this->assertSame(-7, $sequence->getSequence()->getLength());
     }
 
     public function testIndex()
     {
         $sequence = new StringSequenceCreator(1);
         $this->assertEquals('index', $sequence->getSequence()->getType());
+        $this->assertSame(1, $sequence->getSequence()->getFrom());
 
         $sequence = new StringSequenceCreator(-1);
         $this->assertEquals('index', $sequence->getSequence()->getType());
+        $this->assertSame(-1, $sequence->getSequence()->getFrom());
 
         $sequence = new StringSequenceCreator('1');
         $this->assertEquals('index', $sequence->getSequence()->getType());
+        $this->assertSame(1, $sequence->getSequence()->getFrom());
 
         $sequence = new StringSequenceCreator('-1');
         $this->assertEquals('index', $sequence->getSequence()->getType());
+        $this->assertSame(-1, $sequence->getSequence()->getFrom());
     }
 
     public function testRegex()

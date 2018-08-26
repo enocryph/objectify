@@ -4,6 +4,8 @@
 namespace Objectify\Sequence;
 
 use Objectify\Sequence\Exceptions\SequenceException;
+use Objectify\Sequence\Interfaces\NumericSequenceInterface;
+use Objectify\Sequence\Interfaces\RegexSequenceInterface;
 
 abstract class AbstractSequenceCreator
 {
@@ -13,7 +15,7 @@ abstract class AbstractSequenceCreator
     protected $inputSequence;
 
     /**
-     * @var BaseSequence
+     * @var NumericSequenceInterface | RegexSequenceInterface
      */
     protected $sequence;
 
@@ -46,7 +48,7 @@ abstract class AbstractSequenceCreator
         }
     }
     
-    public function getSequence(): BaseSequence
+    public function getSequence()
     {
         return $this->sequence;
     }

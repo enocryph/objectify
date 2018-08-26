@@ -21,11 +21,10 @@ class RangeSequence extends BaseSequence implements NumericSequenceInterface
         $matches = [];
 
         if (preg_match($this->getValidationRegex(), $this->inputSequence, $matches)) {
+            $this->from = $matches[1] ? (int)$matches[1] : 0;
+            $this->to = isset($matches[2]) ? (int)$matches[2] : null;
 
-            $this->from = isset($matches[1]) ? $matches[1] : 0;
-            $this->to = isset($matches[2]) ? $matches[2] : 'END';
-
-            if (isset($matches[1]) || isset($matches[2])) {
+            if ($matches[1] || isset($matches[2])) {
                 return true;
             }
         }
@@ -48,8 +47,16 @@ class RangeSequence extends BaseSequence implements NumericSequenceInterface
         return $this->from;
     }
 
-    public function getTo(): int
+    public function getLength()
     {
-        return $this->to;
+        if (is_null($this->to)) {
+            return null;
+        }
+
+        if ($this->to < 0) {
+            return $this->to;
+        }
+
+        return $this->to - $this->from + 1;
     }
 }
