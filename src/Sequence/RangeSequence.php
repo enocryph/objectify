@@ -5,17 +5,34 @@ namespace Objectify\Sequence;
 
 use Objectify\Sequence\Interfaces\NumericSequenceInterface;
 
+/**
+ * Class RangeSequence
+ * @package Objectify\Sequence
+ * @author Vadim Perevoz <enocryph@gmail.com>
+ */
 class RangeSequence extends BaseSequence implements NumericSequenceInterface
 {
+    /**
+     * @var
+     */
     private $from;
 
+    /**
+     * @var
+     */
     private $to;
 
+    /**
+     * @return string
+     */
     public function getType(): string
     {
         return 'range';
     }
 
+    /**
+     * @return bool
+     */
     public function isValid(): bool
     {
         $matches = [];
@@ -32,21 +49,25 @@ class RangeSequence extends BaseSequence implements NumericSequenceInterface
         return false;
     }
 
-    public function getInputSequence(): string
-    {
-        return $this->inputSequence;
-    }
-
+    /**
+     * @return string
+     */
     public function getValidationRegex(): string
     {
         return '/^(-?[\d]+)?\.{2}(-?[\d]+)?/';
     }
 
+    /**
+     * @return int
+     */
     public function getFrom(): int
     {
         return $this->from;
     }
 
+    /**
+     * @return int|null
+     */
     public function getLength()
     {
         if (is_null($this->to)) {

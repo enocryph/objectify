@@ -7,6 +7,11 @@ use Objectify\Sequence\Exceptions\SequenceException;
 use Objectify\Sequence\Interfaces\NumericSequenceInterface;
 use Objectify\Sequence\Interfaces\RegexSequenceInterface;
 
+/**
+ * Class AbstractSequenceCreator
+ * @package Objectify\Sequence
+ * @author Vadim Perevoz <enocryph@gmail.com>
+ */
 abstract class AbstractSequenceCreator
 {
     /**
@@ -47,11 +52,17 @@ abstract class AbstractSequenceCreator
             throw new SequenceException('Invalid sequence : ' . $this->inputSequence);
         }
     }
-    
+
+    /**
+     * @return BaseSequence|NumericSequenceInterface|RegexSequenceInterface
+     */
     public function getSequence()
     {
         return $this->sequence;
     }
 
+    /**
+     * @return array
+     */
     abstract public function getAvailableSequences(): array;
 }

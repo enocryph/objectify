@@ -5,17 +5,34 @@ namespace Objectify\Sequence;
 
 use Objectify\Sequence\Interfaces\RegexSequenceInterface;
 
+/**
+ * Class RegexSequence
+ * @package Objectify\Sequence
+ * @author Vadim Perevoz <enocryph@gmail.com>
+ */
 class RegexSequence extends BaseSequence implements RegexSequenceInterface
 {
+    /**
+     * @var
+     */
     private $regex;
 
+    /**
+     * @var
+     */
     private $matchGroup;
 
+    /**
+     * @return string
+     */
     public function getType(): string
     {
         return 'regex';
     }
 
+    /**
+     * @return bool
+     */
     public function isValid(): bool
     {
         $matches = [];
@@ -34,21 +51,25 @@ class RegexSequence extends BaseSequence implements RegexSequenceInterface
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function getValidationRegex(): string
     {
         return '/^(\/.+\/),?(\s?[\d]+)?/';
     }
 
-    public function getInputSequence(): string
-    {
-        return $this->inputSequence;
-    }
-
+    /**
+     * @return string
+     */
     public function getRegex(): string
     {
         return $this->regex;
     }
 
+    /**
+     * @return int
+     */
     public function getMatchGroup(): int
     {
         return $this->matchGroup;
