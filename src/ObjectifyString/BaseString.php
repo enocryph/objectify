@@ -17,6 +17,11 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
      */
     protected $value;
 
+    public function __construct($value)
+    {
+        $this->value = $value;
+    }
+
     /**
      * @return mixed
      */
