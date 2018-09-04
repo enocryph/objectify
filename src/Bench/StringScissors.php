@@ -35,7 +35,7 @@ class StringScissors implements ScissorsInterface
     {
         $separated = new Separated();
         $separated->setBeginning(substr($objectify->getValue(), 0, $sequence->getFrom()));
-        $separated->setMiddle(substr($objectify->getValue(), $sequence->getFrom(), $sequence->getLength()));
+        $separated->setMiddle(substr($objectify->getValue(), $sequence->getFrom(), $sequence->getLength() ?? strlen($objectify->getValue())));
 
         if (!$this->endsWith($objectify->getValue(), $separated->getMiddle())) {
             $separated->setEnding(substr($objectify->getValue(), $sequence->getFrom() + $sequence->getLength()));
