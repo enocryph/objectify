@@ -17,25 +17,6 @@ use Objectify\Sequence\StringSequenceCreator;
 class ObjectifyString extends BaseString implements ObjectifyInterface
 {
     /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * @param $value
-     * @return $this
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-        return $this;
-    }
-
-
-    /**
      * @param mixed ...$sequence
      * @return ObjectifyString
      */
@@ -44,40 +25,41 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
         return $this->processSequenceCall($sequence, 'strtoupper');
     }
 
-
     /**
-     * @param $sequence
-     * @param $function
-     * @return $this
+     * @param mixed ...$sequence
+     * @return ObjectifyString
      */
-    private function processSequenceCall($sequence, $function)
+    public function lowercase(...$sequence)
     {
-        if ($sequence) {
-            $sequenceCreator = new StringSequenceCreator($sequence);
-            $sequence = $sequenceCreator->getSequence();
-
-            if ($sequence->getType() !== 'invalid') {
-                $scissors = new StringScissors();
-                $glue = new StringGlue();
-                $workbench = new Workbench($this, $sequence, $scissors, $glue);
-
-                $workbench->cut();
-                $workbench->applyOnSeparated($function);
-                $this->setValue($workbench->getValue());
-            } else {
-                $this->processNormalCall($function);
-            }
-
-        } else {
-            $this->processNormalCall($function);
-        }
-
-        return $this;
+        return $this->processSequenceCall($sequence, 'strtolower');
     }
 
-    private function processNormalCall($function)
+    public function trim(...$sequence)
     {
-        $this->setValue(call_user_func($function, $this->value));
-        return $this;
+        return $this->processSequenceCall($sequence, 'trim');
+    }
+
+    public function ltrim(...$sequence)
+    {
+        return $this->processSequenceCall($sequence, 'ltrim');
+    }
+
+    public function rtrim(...$sequence)
+    {
+        return $this->processSequenceCall($sequence, 'rtrim');
+    }
+
+    /**
+     * @param mixed ...$sequence
+     * @return ObjectifyString
+     */
+    public function reverse(...$sequence)
+    {
+        return $this->processSequenceCall($sequence, 'strrev');
+    }
+
+    public function length()
+    {
+        return $this->processNormalCallWithResult('strlen');
     }
 }

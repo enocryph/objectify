@@ -3,7 +3,11 @@
 
 namespace Objectify\ObjectifyString;
 
+use Objectify\Bench\StringGlue;
+use Objectify\Bench\StringScissors;
+use Objectify\Bench\Workbench;
 use Objectify\Interfaces\ObjectifyInterface;
+use Objectify\Sequence\StringSequenceCreator;
 
 /**
  * Class BaseString
@@ -82,5 +86,46 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
     public function count()
     {
         // TODO: Implement count() method.
+    }
+
+    /**
+     * @param $sequence
+     * @param $function
+     * @return $this
+     */
+    protected function processSequenceCall($sequence, $function)
+    {
+        if ($sequence) {
+            $sequenceCreator = new StringSequenceCreator($sequence);
+            $sequence = $sequenceCreator->getSequence();
+
+            if ($sequence->getType() !== 'invalid') {
+                $scissors = new StringScissors();
+                $glue = new StringGlue();
+                $workbench = new Workbench($this, $sequence, $scissors, $glue);
+
+                $workbench->cut();
+                $workbench->applyOnSeparated($function);
+                $this->setValue($workbench->getValue());
+            } else {
+                $this->processNormalCall($function);
+            }
+
+        } else {
+            $this->processNormalCall($function);
+        }
+
+        return $this;
+    }
+
+    protected function processNormalCall($function)
+    {
+        $this->setValue(call_user_func($function, $this->value));
+        return $this;
+    }
+
+    protected function processNormalCallWithResult($function)
+    {
+        return call_user_func($function, $this->value);
     }
 }
