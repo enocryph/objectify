@@ -143,9 +143,5 @@ class StringSequenceCreatorTest extends TestCase
         $this->assertSame('/[aeiou](.)\1/', $sequence->getSequence()->getRegex());
         $this->assertSame(1, $sequence->getSequence()->getMatchGroup());
         $this->assertSame('/[aeiou](.)\1/, 1', $sequence->getSequence()->getInputSequence());
-
-        $this->expectException(SequenceException::class);
-        $sequence = new StringSequenceCreator('/[aeiou](.)\1, 1');
-
     }
 }
