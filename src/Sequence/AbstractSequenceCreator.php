@@ -27,7 +27,6 @@ abstract class AbstractSequenceCreator
     /**
      * SequenceCreator constructor.
      * @param $inputSequence
-     * @throws SequenceException
      */
     public function __construct($inputSequence)
     {
@@ -49,7 +48,7 @@ abstract class AbstractSequenceCreator
         }
 
         if (!$this->sequence) {
-            throw new SequenceException('Invalid sequence : ' . $this->inputSequence);
+            $this->sequence = new InvalidSequence($this->inputSequence);
         }
     }
 
