@@ -63,7 +63,7 @@ class Workbench
     {
         if ($this->sequence instanceof NumericSequenceInterface) {
             if ($this->sequence->getType() === 'index') {
-                $this->separated = $this->scissors->indexCut($this->objectify, $this->sequence);
+                $this->separated = $this->scissors->normalCut($this->objectify, $this->sequence);
             } else {
                 $this->separated = $this->scissors->normalCut($this->objectify, $this->sequence);
             }
