@@ -20,7 +20,7 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
      */
     public function uppercase(...$sequence)
     {
-        return $this->processSequenceCall($sequence, 'strtoupper');
+        return $this->processCall($sequence, 'strtoupper');
     }
 
     /**
@@ -32,7 +32,7 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
      */
     public function lowercase(...$sequence)
     {
-        return $this->processSequenceCall($sequence, 'strtolower');
+        return $this->processCall($sequence, 'strtolower');
     }
 
     /**
@@ -44,7 +44,7 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
      */
     public function trim(...$sequence)
     {
-        return $this->processSequenceCall($sequence, 'trim');
+        return $this->processCall($sequence, 'trim');
     }
 
     /**
@@ -56,7 +56,7 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
      */
     public function ltrim(...$sequence)
     {
-        return $this->processSequenceCall($sequence, 'ltrim');
+        return $this->processCall($sequence, 'ltrim');
     }
 
     /**
@@ -68,7 +68,7 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
      */
     public function rtrim(...$sequence)
     {
-        return $this->processSequenceCall($sequence, 'rtrim');
+        return $this->processCall($sequence, 'rtrim');
     }
 
     /**
@@ -80,7 +80,7 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
      */
     public function reverse(...$sequence)
     {
-        return $this->processSequenceCall($sequence, 'strrev');
+        return $this->processCall($sequence, 'strrev');
     }
 
     /**
@@ -89,10 +89,11 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
      * @see strrev()
      * @param mixed ...$sequence
      * @return ObjectifyString
+     * @codeCoverageIgnore
      */
     public function shuffle(...$sequence)
     {
-        return $this->processSequenceCall($sequence, 'str_shuffle');
+        return $this->processCall($sequence, 'str_shuffle');
     }
 
     /**
@@ -104,5 +105,10 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     public function length()
     {
         return $this->processNormalCallWithResult('strlen');
+    }
+
+    public function slice(...$sequence)
+    {
+        return $this->processCall($sequence, '\Objectify\ObjectifyString\getEmptyString', self::OTHER);
     }
 }

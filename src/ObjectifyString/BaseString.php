@@ -21,6 +21,10 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
      */
     protected $value;
 
+    /**
+     * BaseString constructor.
+     * @param $value
+     */
     public function __construct($value)
     {
         $this->value = $value;
@@ -63,37 +67,59 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
         return $this->value;
     }
 
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
     public function offsetExists($offset)
     {
-        // TODO: Implement offsetExists() method.
+        return isset($this->value[$offset]);
     }
 
+    /**
+     * @param mixed $offset
+     * @return string
+     */
     public function offsetGet($offset)
     {
-        // TODO: Implement offsetGet() method.
+        return $this->value[$offset];
     }
 
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @return $this
+     */
     public function offsetSet($offset, $value)
     {
-        // TODO: Implement offsetSet() method.
+        $this->value[$offset] = $value;
+        return $this;
     }
 
+    /**
+     * @param mixed $offset
+     * @return $this
+     */
     public function offsetUnset($offset)
     {
-        // TODO: Implement offsetUnset() method.
+        return $this->processCall($offset, '\Objectify\ObjectifyString\getEmptyString');
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
-        // TODO: Implement count() method.
+        return strlen($this->value);
     }
 
     /**
      * @param $sequence
      * @param $function
+     * @param $type
      * @return $this
      */
-    protected function processSequenceCall($sequence, $function)
+    protected function processCall($sequence, $function, $type = self::SEPARATED)
     {
         if ($sequence) {
             $sequenceCreator = new StringSequenceCreator($sequence);
@@ -105,7 +131,13 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
                 $workbench = new Workbench($this, $sequence, $scissors, $glue);
 
                 $workbench->cut();
-                $workbench->applyOnSeparated($function);
+
+                if ($type === self::OTHER) {
+                    $workbench->applyOnOther($function);
+                } else {
+                    $workbench->applyOnSeparated($function);
+                }
+
                 $this->setValue($workbench->getValue());
             } else {
                 $this->processNormalCall($function);
@@ -118,12 +150,20 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
         return $this;
     }
 
+    /**
+     * @param $function
+     * @return $this
+     */
     protected function processNormalCall($function)
     {
         $this->setValue(call_user_func($function, $this->value));
         return $this;
     }
 
+    /**
+     * @param $function
+     * @return mixed
+     */
     protected function processNormalCallWithResult($function)
     {
         return call_user_func($function, $this->value);

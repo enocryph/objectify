@@ -20,4 +20,13 @@ interface ObjectifyInterface
      * @return mixed
      */
     public function setValue($value);
+
+    /**
+     * @var string
+     */
+    const SEPARATED = 'SEPARATED';
+    /**
+     * @var string
+     */
+    const OTHER = 'OTHER';
 }
