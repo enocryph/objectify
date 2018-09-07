@@ -6,6 +6,7 @@ namespace Objectify\Sequence;
 use Objectify\Sequence\Exceptions\SequenceException;
 use Objectify\Sequence\Interfaces\NumericSequenceInterface;
 use Objectify\Sequence\Interfaces\RegexSequenceInterface;
+use Objectify\Sequence\Interfaces\SequenceInterface;
 
 /**
  * Class AbstractSequenceCreator
@@ -20,7 +21,7 @@ abstract class AbstractSequenceCreator
     protected $inputSequence;
 
     /**
-     * @var NumericSequenceInterface | RegexSequenceInterface
+     * @var SequenceInterface
      */
     protected $sequence;
 
@@ -39,7 +40,7 @@ abstract class AbstractSequenceCreator
         foreach ($this->getAvailableSequences() as $sequenceClassName) {
             $sequenceClass = "\Objectify\Sequence\\" . $sequenceClassName . "Sequence";
 
-            /** @var BaseSequence $sequence */
+            /** @var NumericSequenceInterface | RegexSequenceInterface $sequence */
             $sequence = new $sequenceClass($this->inputSequence);
 
             if ($sequence->isValid()) {
