@@ -85,6 +85,24 @@ class StringSequenceCreatorTest extends TestCase
         $this->assertSame(-7, $sequence->getSequence()->getLength());
         $this->assertSame('-2,-7', $sequence->getSequence()->getInputSequence());
 
+        $sequence = new StringSequenceCreator([-2, null]);
+        $this->assertEquals('length', $sequence->getSequence()->getType());
+        $this->assertSame(-2, $sequence->getSequence()->getFrom());
+        $this->assertSame(null, $sequence->getSequence()->getLength());
+        $this->assertSame('-2,', $sequence->getSequence()->getInputSequence());
+
+        $sequence = new StringSequenceCreator('-2, null');
+        $this->assertEquals('length', $sequence->getSequence()->getType());
+        $this->assertSame(-2, $sequence->getSequence()->getFrom());
+        $this->assertSame(null, $sequence->getSequence()->getLength());
+        $this->assertSame('-2, null', $sequence->getSequence()->getInputSequence());
+
+        $sequence = new StringSequenceCreator('-2,null');
+        $this->assertEquals('length', $sequence->getSequence()->getType());
+        $this->assertSame(-2, $sequence->getSequence()->getFrom());
+        $this->assertSame(null, $sequence->getSequence()->getLength());
+        $this->assertSame('-2,null', $sequence->getSequence()->getInputSequence());
+
         $sequence = new StringSequenceCreator('-2, 3');
         $this->assertEquals('length', $sequence->getSequence()->getType());
         $this->assertSame(-2, $sequence->getSequence()->getFrom());
@@ -143,9 +161,13 @@ class StringSequenceCreatorTest extends TestCase
         $this->assertSame('/[aeiou](.)\1/', $sequence->getSequence()->getRegex());
         $this->assertSame(1, $sequence->getSequence()->getMatchGroup());
         $this->assertSame('/[aeiou](.)\1/, 1', $sequence->getSequence()->getInputSequence());
-
-        $this->expectException(SequenceException::class);
-        $sequence = new StringSequenceCreator('/[aeiou](.)\1, 1');
-
     }
+
+    public function testInvalid()
+    {
+        $sequence = new StringSequenceCreator('nvm:)');
+        $this->assertEquals('invalid', $sequence->getSequence()->getType());
+        $this->assertSame(false, $sequence->getSequence()->isValid());
+    }
+
 }

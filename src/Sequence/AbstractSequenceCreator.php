@@ -27,7 +27,6 @@ abstract class AbstractSequenceCreator
     /**
      * SequenceCreator constructor.
      * @param $inputSequence
-     * @throws \Exception
      */
     public function __construct($inputSequence)
     {
@@ -38,7 +37,7 @@ abstract class AbstractSequenceCreator
         }
 
         foreach ($this->getAvailableSequences() as $sequenceClassName) {
-            $sequenceClass = "\Objectify\Sequence\\{$sequenceClassName}Sequence";
+            $sequenceClass = "\Objectify\Sequence\\" . $sequenceClassName . "Sequence";
 
             /** @var BaseSequence $sequence */
             $sequence = new $sequenceClass($this->inputSequence);
@@ -49,7 +48,7 @@ abstract class AbstractSequenceCreator
         }
 
         if (!$this->sequence) {
-            throw new SequenceException('Invalid sequence : ' . $this->inputSequence);
+            $this->sequence = new InvalidSequence($this->inputSequence);
         }
     }
 

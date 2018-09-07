@@ -13,12 +13,12 @@ use Objectify\Sequence\Interfaces\NumericSequenceInterface;
 class RangeSequence extends BaseSequence implements NumericSequenceInterface
 {
     /**
-     * @var
+     * @var int
      */
     private $from;
 
     /**
-     * @var
+     * @var int|null
      */
     private $to;
 
