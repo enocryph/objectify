@@ -83,6 +83,15 @@ class Workbench
         return $this;
     }
 
+    public function applyOnOther($function)
+    {
+        $beginning = call_user_func($function, $this->separated->getBeginning());
+        $ending = call_user_func($function, $this->separated->getEnding());
+        $this->separated->setBeginning($beginning);
+        $this->separated->setEnding($ending);
+        return $this;
+    }
+
     /**
      * @return mixed
      */
