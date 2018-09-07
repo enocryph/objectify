@@ -19,10 +19,21 @@ class StringScissors implements ScissorsInterface
      * @param ObjectifyInterface $objectify
      * @param NumericSequenceInterface $sequence
      * @return SeparatedInterface
+     * @codeCoverageIgnore
+     * @deprecated
      */
     public function indexCut(ObjectifyInterface $objectify, NumericSequenceInterface $sequence): SeparatedInterface
     {
         $separated = new Separated();
+
+        if ($sequence->getFrom() === 0) {
+            $separated->setBeginning("");
+        } elseif ($sequence->getFrom() === count($objectify->getValue())) {
+            $separated->setEnding("");
+        }
+
+        $separated->setMiddle($objectify->getValue()[$sequence->getFrom()]);
+
         return $separated;
     }
 
