@@ -39,7 +39,7 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
      */
     public function setValue($value)
     {
-        $this->setValue($value);
+        $this->value = $value;
     }
 
     /**
