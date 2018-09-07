@@ -6,7 +6,7 @@ namespace Objectify\Sequence;
 /**
  * Class StringSequenceCreator
  * @package Objectify\Sequence
- * use Objectify\Sequence\Interfaces\NumericSequenceInterface;
+ * @author Vadim Perevoz <enocryph@gmail.com>
  */
 class StringSequenceCreator extends AbstractSequenceCreator
 {

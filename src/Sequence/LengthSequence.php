@@ -13,12 +13,12 @@ use Objectify\Sequence\Interfaces\NumericSequenceInterface;
 class LengthSequence extends BaseSequence implements NumericSequenceInterface
 {
     /**
-     * @var
+     * @var int
      */
     private $start;
 
     /**
-     * @var
+     * @var int|null
      */
     private $length;
 

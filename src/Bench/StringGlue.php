@@ -8,6 +8,7 @@ use Objectify\Bench\Interfaces\GlueInterface;
 /**
  * Class StringGlue
  * @package Objectify\Bench
+ * @author Vadim Perevoz <enocryph@gmail.com>
  */
 class StringGlue implements GlueInterface
 {

@@ -17,6 +17,8 @@ interface ScissorsInterface
      * @param ObjectifyInterface $objectify
      * @param NumericSequenceInterface $sequence
      * @return SeparatedInterface
+     * @codeCoverageIgnore
+     * @deprecated
      */
     public function indexCut(ObjectifyInterface $objectify, NumericSequenceInterface $sequence): SeparatedInterface;
 
