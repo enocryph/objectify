@@ -38,7 +38,9 @@ class LengthSequence extends BaseSequence implements NumericSequenceInterface
         $matches = [];
 
         if (preg_match($this->getValidationRegex(), $this->inputSequence, $matches)) {
-            list(, $this->start, $this->length) = $matches;
+            $this->start = $matches[1];
+            $this->length = isset($matches[2]) && $matches[2] !== 'null' ? (int)$matches[2] : null;
+
             return true;
         }
         return false;
@@ -49,7 +51,7 @@ class LengthSequence extends BaseSequence implements NumericSequenceInterface
      */
     public function getValidationRegex(): string
     {
-        return '/^(-?[\'\d\']+)\,\s?(-?[\'\d\']+)/';
+        return '/^(-?[\'\d\']+)\,\s?(-?[\'\d\']+|null)?$/';
     }
 
     /**
@@ -63,7 +65,7 @@ class LengthSequence extends BaseSequence implements NumericSequenceInterface
     /**
      * @return int
      */
-    public function getLength(): int
+    public function getLength()
     {
         return $this->length;
     }
