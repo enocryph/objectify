@@ -31,7 +31,7 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getValue()
     {
@@ -60,7 +60,7 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function __toString()
     {
