@@ -37,8 +37,21 @@ class StringScissors implements ScissorsInterface
         $separated->setBeginning(substr($objectify->getValue(), 0, $sequence->getFrom()));
         $separated->setMiddle(substr($objectify->getValue(), $sequence->getFrom(), $sequence->getLength() ?? strlen($objectify->getValue())));
 
+        if ($sequence->getLength() < 0 && $sequence->getFrom() < 0 && $sequence->getFrom() >= $sequence->getLength()) {
+            $separated->setBeginning('');
+            $separated->setMiddle('');
+            $separated->setEnding('');
+            return $separated;
+        }
+
         if (!$this->endsWith($objectify->getValue(), $separated->getMiddle())) {
-            $separated->setEnding(substr($objectify->getValue(), $sequence->getFrom() + $sequence->getLength()));
+            if ($sequence->getLength() < 0 && $sequence->getFrom() > $sequence->getLength()) {
+                $separated->setEnding(substr($objectify->getValue(), $sequence->getLength()));
+            } elseif ($sequence->getLength() < 0 && $sequence->getFrom() < 0 && $sequence->getFrom() < $sequence->getLength()) {
+                $separated->setEnding(substr($objectify->getValue(), $sequence->getLength(), strlen($objectify->getValue())));
+            } else {
+                $separated->setEnding(substr($objectify->getValue(), $sequence->getFrom() + $sequence->getLength()));
+            }
         } else {
             $separated->setEnding("");
         }
