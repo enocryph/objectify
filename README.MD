@@ -1,3 +1,5 @@
 # Objectify
 
-![Logo](/cube.png)
+<div style="text-align: center;">
+    <img src="/cube.png">
+</div>
