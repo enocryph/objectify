@@ -96,6 +96,11 @@ class StringScissorsTest extends TestCase
         $this->assertSame('there is no knowledge, that is not ', $separated->getBeginning());
         $this->assertSame('power', $separated->getMiddle());
         $this->assertSame('', $separated->getEnding());
+
+        $separated = $this->getSeparatedWithNormalCut('there is no knowledge, that is not power', '0..0');
+        $this->assertSame('', $separated->getBeginning());
+        $this->assertSame('', $separated->getMiddle());
+        $this->assertSame('there is no knowledge, that is not power', $separated->getEnding());
     }
 
     /**

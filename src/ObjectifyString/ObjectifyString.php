@@ -13,6 +13,11 @@ use Objectify\Interfaces\ObjectifyInterface;
 class ObjectifyString extends BaseString implements ObjectifyInterface
 {
     /**
+     * @var string
+     */
+    const FUNCTIONS_NAMESPACE = "\Objectify\ObjectifyString\\";
+
+    /**
      * Make a string or string part with sequence uppercase
      *
      * @param mixed ...$sequence
@@ -104,11 +109,39 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
      */
     public function length()
     {
-        return $this->processNormalCallWithResult('strlen');
+        return $this->processNonSequenceCall('strlen', [], true);
     }
 
+    /**
+     * @param mixed ...$sequence
+     * @return mixed|BaseString
+     */
     public function slice(...$sequence)
     {
-        return $this->processCall($sequence, '\Objectify\ObjectifyString\getEmptyString', self::OTHER);
+        return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . 'getEmptyString', [], self::OTHER);
+    }
+
+    /**
+     * @param $string
+     * @param bool $caseInsensitive
+     * @param mixed ...$sequence
+     * @return mixed|BaseString
+     */
+    public function startsWith($string, $caseInsensitive = false, ...$sequence)
+    {
+        $function = $caseInsensitive ? 'startsWithCaseInsensitive' : 'startsWith';
+        return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . $function, [$string], self::SEPARATED, true);
+    }
+
+    /**
+     * @param $string
+     * @param bool $caseInsensitive
+     * @param mixed ...$sequence
+     * @return mixed|BaseString
+     */
+    public function endsWith($string, $caseInsensitive = false, ...$sequence)
+    {
+        $function = $caseInsensitive ? 'endsWithCaseInsensitive' : 'endsWith';
+        return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . $function, [$string], self::SEPARATED, true);
     }
 }

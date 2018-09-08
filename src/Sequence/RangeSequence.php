@@ -74,7 +74,7 @@ class RangeSequence extends BaseSequence implements NumericSequenceInterface
             return null;
         }
 
-        if ($this->to < 0) {
+        if ($this->to <= 0) {
             return $this->to;
         }
 

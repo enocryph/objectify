@@ -39,6 +39,12 @@ class ObjectifyStringTest extends TestCase
         $this->assertSame("REVOLUTION", $objectify->uppercase()->getValue());
     }
 
+    public function testInvalidSequenceCall()
+    {
+        $objectify = new ObjectifyString("revolution");
+        $this->assertSame("REVOLUTION", $objectify->uppercase('nvm:)')->getValue());
+    }
+
     public function testLeftTrim()
     {
         $objectify = new ObjectifyString("     revolution  ");
@@ -68,4 +74,24 @@ class ObjectifyStringTest extends TestCase
         $objectify = new ObjectifyString("it's a trap");
         $this->assertSame("it's a part", $objectify->reverse('-4..')->getValue());
     }
+
+    public function testStartsWith()
+    {
+        $objectify = new ObjectifyString("hello world!");
+        $this->assertSame(true, $objectify->startsWith('hel'));
+        $this->assertSame(true, $objectify->startsWith('wo', false, '-6..'));
+        $this->assertSame(true, $objectify->startsWith('l', false, '2..4'));
+        $this->assertSame(true, $objectify->startsWith('L', true, '2..4'));
+    }
+
+    public function testEndsWith()
+    {
+        $objectify = new ObjectifyString("hello world!");
+        $this->assertSame(true, $objectify->endsWith('ld!'));
+        $this->assertSame(true, $objectify->endsWith('ld!', false, '-6..'));
+        $this->assertSame(true, $objectify->endsWith('lo', false, '..4'));
+        $this->assertSame(true, $objectify->endsWith('LO', true, '..4'));
+    }
+
+
 }
