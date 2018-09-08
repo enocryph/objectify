@@ -3,17 +3,20 @@
 
 namespace Objectify\Bench;
 
+use Objectify\Bench\Interfaces\RegexScissorsInterface;
 use Objectify\Bench\Interfaces\ScissorsInterface;
 use Objectify\Bench\Interfaces\SeparatedInterface;
 use Objectify\Interfaces\ObjectifyInterface;
 use Objectify\Sequence\Interfaces\NumericSequenceInterface;
+use function Objectify\ObjectifyString\endsWith;
+use Objectify\Sequence\Interfaces\RegexSequenceInterface;
 
 /**
  * Class StringScissors
  * @package Objectify\Bench
  * @author Vadim Perevoz <enocryph@gmail.com>
  */
-class StringScissors implements ScissorsInterface
+class StringScissors implements ScissorsInterface, RegexScissorsInterface
 {
     /**
      * @param ObjectifyInterface $objectify
@@ -55,7 +58,7 @@ class StringScissors implements ScissorsInterface
             return $separated;
         }
 
-        if (!$this->endsWith($objectify->getValue(), $separated->getMiddle())) {
+        if (!endsWith($objectify->getValue(), $separated->getMiddle())) {
             if ($sequence->getLength() < 0 && $sequence->getFrom() > $sequence->getLength()) {
                 $separated->setEnding(substr($objectify->getValue(), $sequence->getLength()));
             } elseif ($sequence->getLength() < 0 && $sequence->getFrom() < 0 && $sequence->getFrom() < $sequence->getLength()) {
@@ -68,15 +71,5 @@ class StringScissors implements ScissorsInterface
         }
 
         return $separated;
-    }
-
-    /**
-     * @param $haystack
-     * @param $needle
-     * @return bool
-     */
-    private function endsWith($haystack, $needle)
-    {
-        return substr($haystack, -strlen($needle)) === $needle;
     }
 }
