@@ -26,6 +26,11 @@ interface SeparatedInterface
     public function getEnding();
 
     /**
+     * @return mixed
+     */
+    public function getResult();
+
+    /**
      * @param $beginning
      * @return mixed
      */
@@ -42,4 +47,10 @@ interface SeparatedInterface
      * @return mixed
      */
     public function setEnding($ending);
+
+    /**
+     * @param $result
+     * @return mixed
+     */
+    public function setResult($result);
 }

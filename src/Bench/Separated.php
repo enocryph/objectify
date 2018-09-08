@@ -28,6 +28,11 @@ class Separated implements SeparatedInterface
     private $ending;
 
     /**
+     * @var mixed
+     */
+    private $result;
+
+    /**
      * @return mixed
      */
     public function getBeginning()
@@ -75,4 +80,20 @@ class Separated implements SeparatedInterface
         $this->ending = $ending;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
+
+    /**
+     * @param $result
+     * @return mixed|void
+     */
+    public function setResult($result)
+    {
+        $this->result = $result;
+    }
 }

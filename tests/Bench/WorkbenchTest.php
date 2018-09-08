@@ -5,6 +5,7 @@ namespace Objectify\Tests\Bench;
 use Objectify\Bench\StringGlue;
 use Objectify\Bench\StringScissors;
 use Objectify\Bench\Workbench;
+use Objectify\Interfaces\ObjectifyInterface;
 use Objectify\ObjectifyString\ObjectifyString;
 use Objectify\Sequence\StringSequenceCreator;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +23,7 @@ class WorkbenchTest extends TestCase
         $workbench = new Workbench($objectify, $sequence, $scissors, $glue);
 
         $workbench->cut();
-        $workbench->applyOnSeparated('strtoupper');
+        $workbench->apply('strtoupper', [], ObjectifyInterface::SEPARATED);
         $this->assertSame('powER', $workbench->getValue());
 
         $sequenceCreator = new StringSequenceCreator('-1');
@@ -30,7 +31,7 @@ class WorkbenchTest extends TestCase
         $workbench = new Workbench($objectify, $sequence, $scissors, $glue);
 
         $workbench->cut();
-        $workbench->applyOnSeparated('strtoupper');
+        $workbench->apply('strtoupper', [], ObjectifyInterface::SEPARATED);
         $this->assertSame('poweR', $workbench->getValue());
     }
 
@@ -45,7 +46,7 @@ class WorkbenchTest extends TestCase
         $workbench = new Workbench($objectify, $sequence, $scissors, $glue);
 
         $workbench->cut();
-        $workbench->applyOnOther('strtoupper');
+        $workbench->apply('strtoupper', [], ObjectifyInterface::OTHER);
         $this->assertSame('POWer', $workbench->getValue());
 
         $sequenceCreator = new StringSequenceCreator('-1');
@@ -53,7 +54,7 @@ class WorkbenchTest extends TestCase
         $workbench = new Workbench($objectify, $sequence, $scissors, $glue);
 
         $workbench->cut();
-        $workbench->applyOnOther('strtoupper');
+        $workbench->apply('strtoupper', [], ObjectifyInterface::OTHER);
         $this->assertSame('POWEr', $workbench->getValue());
     }
 }

@@ -73,23 +73,68 @@ class Workbench
     }
 
     /**
-     * @param $function
+     * @param callable $callback
+     * @param array $parameters
+     * @param string $type
+     * @param bool $return
      * @return $this
      */
-    public function applyOnSeparated($function)
+    public function apply(callable $callback, $parameters = [], $type = ObjectifyInterface::SEPARATED, $return = false)
     {
-        $result = call_user_func($function, $this->separated->getMiddle());
-        $this->separated->setMiddle($result);
+        if ($type === ObjectifyInterface::OTHER) {
+            $this->applyOnOther($callback, $parameters);
+        } else {
+            $this->applyOnSeparated($callback, $parameters, $return);
+        }
         return $this;
     }
 
-    public function applyOnOther($function)
+    /**
+     * @param callable $callback
+     * @param array $parameters
+     * @return $this
+     */
+    private function applyOnOther(callable $callback, $parameters = [])
     {
-        $beginning = call_user_func($function, $this->separated->getBeginning());
-        $ending = call_user_func($function, $this->separated->getEnding());
-        $this->separated->setBeginning($beginning);
-        $this->separated->setEnding($ending);
+        $this->separated->setBeginning($this->call($this->separated->getBeginning(), $callback, $parameters));
+        $this->separated->setEnding($this->call($this->separated->getEnding(), $callback, $parameters));
         return $this;
+    }
+
+    /**
+     * @param callable $callback
+     * @param array $parameters
+     * @param bool $return
+     * @return $this
+     */
+    private function applyOnSeparated(callable $callback, $parameters = [], $return = false)
+    {
+        $result = $this->call($this->separated->getMiddle(), $callback, $parameters);
+
+        if ($return) {
+            $this->separated->setResult($result);
+        } else {
+            $this->separated->setMiddle($result);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $part
+     * @param callable $callback
+     * @param array $parameters
+     * @return mixed
+     */
+    private function call($part, callable $callback, $parameters = [])
+    {
+        if ($parameters) {
+            array_unshift($parameters, $part);
+        } else {
+            $parameters = [$part];
+        }
+
+        return call_user_func_array($callback, $parameters);
     }
 
     /**
@@ -98,5 +143,13 @@ class Workbench
     public function getValue()
     {
         return $this->glue->glue($this->separated);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResult()
+    {
+        return $this->separated->getResult();
     }
 }

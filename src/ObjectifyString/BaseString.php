@@ -115,57 +115,72 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
 
     /**
      * @param $sequence
-     * @param $function
-     * @param $type
-     * @return $this
+     * @param callable $callback
+     * @param array $parameters
+     * @param string $type
+     * @param bool $return
+     * @return mixed|BaseString
      */
-    protected function processCall($sequence, $function, $type = self::SEPARATED)
+    protected function processCall($sequence, callable $callback, $parameters = [], $type = self::SEPARATED, $return = false)
     {
         if ($sequence) {
-            $sequenceCreator = new StringSequenceCreator($sequence);
-            $sequence = $sequenceCreator->getSequence();
-
-            if ($sequence->getType() !== 'invalid') {
-                $scissors = new StringScissors();
-                $glue = new StringGlue();
-                $workbench = new Workbench($this, $sequence, $scissors, $glue);
-
-                $workbench->cut();
-
-                if ($type === self::OTHER) {
-                    $workbench->applyOnOther($function);
-                } else {
-                    $workbench->applyOnSeparated($function);
-                }
-
-                $this->setValue($workbench->getValue());
-            } else {
-                $this->processNormalCall($function);
-            }
-
+            return $this->processSequenceCall($sequence, $callback, $parameters, $type, $return);
         } else {
-            $this->processNormalCall($function);
+            return $this->processNonSequenceCall($callback, $parameters, $return);
+        }
+    }
+
+    /**
+     * @param $sequence
+     * @param callable $callback
+     * @param array $parameters
+     * @param string $type
+     * @param bool $return
+     * @return $this|mixed|BaseString
+     */
+    protected function processSequenceCall($sequence, callable $callback, $parameters = [], $type = self::SEPARATED, $return = false)
+    {
+        $sequenceCreator = new StringSequenceCreator($sequence);
+        $sequence = $sequenceCreator->getSequence();
+
+        if ($sequence->getType() === 'invalid') {
+            return $this->processNonSequenceCall($callback, $parameters, $return);
         }
 
-        return $this;
+        $scissors = new StringScissors();
+        $glue = new StringGlue();
+        $workbench = new Workbench($this, $sequence, $scissors, $glue);
+        $workbench->cut();
+        $workbench->apply($callback, $parameters, $type, $return);
+
+        if ($return) {
+            return $workbench->getResult();
+        } else {
+            $this->setValue($workbench->getValue());
+            return $this;
+        }
     }
 
     /**
-     * @param $function
-     * @return $this
+     * @param callable $callback
+     * @param array $parameters
+     * @param bool $return
+     * @return mixed|BaseString
      */
-    protected function processNormalCall($function)
+    protected function processNonSequenceCall(callable $callback, $parameters = [], $return = false)
     {
-        $this->setValue(call_user_func($function, $this->value));
-        return $this;
-    }
+        if ($parameters) {
+            array_unshift($parameters, $this->value);
+        } else {
+            $parameters = [$this->value];
+        }
 
-    /**
-     * @param $function
-     * @return mixed
-     */
-    protected function processNormalCallWithResult($function)
-    {
-        return call_user_func($function, $this->value);
+        $result = call_user_func_array($callback, $parameters);
+
+        if (!$return) {
+            $this->setValue($result);
+        }
+
+        return $return ? $result : $this;
     }
 }
