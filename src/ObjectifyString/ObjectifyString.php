@@ -4,6 +4,7 @@
 namespace Objectify\ObjectifyString;
 
 use Objectify\Interfaces\ObjectifyInterface;
+use phpDocumentor\Reflection\Types\This;
 
 /**
  * Class ObjectifyString
@@ -185,5 +186,36 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     public function pad($length, $pad = " ", $type = STR_PAD_RIGHT, ...$sequence)
     {
         return $this->processCall($sequence, 'str_pad', [$length, $pad, $type]);
+    }
+
+    /**
+     * @param $multiplier
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function repeat($multiplier, ...$sequence)
+    {
+        return $this->processCall($sequence, 'str_repeat', [$multiplier]);
+    }
+
+    /**
+     * @param $search
+     * @param $replace
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function replace($search, $replace, ...$sequence)
+    {
+        return $this->processCall($sequence, 'str_replace', [$search, $replace, 'value' => true]);
+    }
+
+    /**
+     * @param $replacement
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function replaceWith($replacement, ...$sequence)
+    {
+        return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . 'fakeReplace', [$replacement]);
     }
 }

@@ -10,6 +10,11 @@ function getEmptyString()
     return '';
 }
 
+function fakeReplace($string, $replacement)
+{
+    return $replacement;
+}
+
 /**
  * @param $haystack
  * @param $needle
