@@ -10,6 +10,11 @@ function getEmptyString()
     return '';
 }
 
+function fakeReplace($string, $replacement)
+{
+    return $replacement;
+}
+
 /**
  * @param $haystack
  * @param $needle
@@ -52,4 +57,34 @@ function endsWithCaseInsensitive($haystack, $needle)
     $haystack = strtolower($haystack);
     $needle = strtolower($needle);
     return substr($haystack, -strlen($needle)) === $needle;
+}
+
+/**
+ * @param $string
+ * @param $attachable
+ * @return string
+ */
+function append($string, $attachable)
+{
+    return $string . $attachable;
+}
+
+/**
+ * @param $string
+ * @param $attachable
+ * @return string
+ */
+function prepend($string, $attachable)
+{
+    return $attachable . $string;
+}
+
+/**
+ * @param $string
+ * @param $attachable
+ * @return string
+ */
+function appendBoth($string, $attachable)
+{
+    return $attachable . $string . $attachable;
 }

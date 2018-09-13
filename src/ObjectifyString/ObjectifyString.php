@@ -4,6 +4,7 @@
 namespace Objectify\ObjectifyString;
 
 use Objectify\Interfaces\ObjectifyInterface;
+use phpDocumentor\Reflection\Types\This;
 
 /**
  * Class ObjectifyString
@@ -125,7 +126,7 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
      * @param $string
      * @param bool $caseInsensitive
      * @param mixed ...$sequence
-     * @return mixed|BaseString
+     * @return boolean
      */
     public function startsWith($string, $caseInsensitive = false, ...$sequence)
     {
@@ -137,11 +138,84 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
      * @param $string
      * @param bool $caseInsensitive
      * @param mixed ...$sequence
-     * @return mixed|BaseString
+     * @return boolean
      */
     public function endsWith($string, $caseInsensitive = false, ...$sequence)
     {
         $function = $caseInsensitive ? 'endsWithCaseInsensitive' : 'endsWith';
         return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . $function, [$string], self::SEPARATED, true);
+    }
+
+    /**
+     * @param $string
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function append($string, ...$sequence)
+    {
+        return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . 'append', [$string]);
+    }
+
+    /**
+     * @param $string
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function prepend($string, ...$sequence)
+    {
+        return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . 'prepend', [$string]);
+    }
+
+    /**
+     * @param $string
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function appendBoth($string, ...$sequence)
+    {
+        return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . 'appendBoth', [$string]);
+    }
+
+    /**
+     * @param $length
+     * @param string $pad
+     * @param int $type can be STR_PAD_RIGHT | STR_PAD_LEFT | STR_PAD_BOTH
+     * @param mixed $sequence
+     * @return $this
+     */
+    public function pad($length, $pad = " ", $type = STR_PAD_RIGHT, ...$sequence)
+    {
+        return $this->processCall($sequence, 'str_pad', [$length, $pad, $type]);
+    }
+
+    /**
+     * @param $multiplier
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function repeat($multiplier, ...$sequence)
+    {
+        return $this->processCall($sequence, 'str_repeat', [$multiplier]);
+    }
+
+    /**
+     * @param $search
+     * @param $replace
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function replace($search, $replace, ...$sequence)
+    {
+        return $this->processCall($sequence, 'str_replace', [$search, $replace, 'value' => true]);
+    }
+
+    /**
+     * @param $replacement
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function replaceWith($replacement, ...$sequence)
+    {
+        return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . 'fakeReplace', [$replacement]);
     }
 }

@@ -93,5 +93,51 @@ class ObjectifyStringTest extends TestCase
         $this->assertSame(true, $objectify->endsWith('LO', true, '..4'));
     }
 
+    public function testAppend()
+    {
+        $objectify = new ObjectifyString("hello world");
+        $this->assertSame("hello world!", $objectify->append('!')->getValue());
+        $this->assertSame("hello! world!", $objectify->append('!', '..4')->getValue());
+    }
 
+    public function testPrepend()
+    {
+        $objectify = new ObjectifyString("hello world");
+        $this->assertSame("!hello world", $objectify->prepend('!')->getValue());
+        $this->assertSame("!hello !world", $objectify->prepend('!', -5, null)->getValue());
+    }
+
+    public function testAppendBoth()
+    {
+        $objectify = new ObjectifyString("hello world");
+        $this->assertSame("he!ll!o world", $objectify->appendBoth('!', 2, 2)->getValue());
+        $this->assertSame("!hello world!", $objectify('hello world')->appendBoth('!')->getValue());
+    }
+
+    public function testPad()
+    {
+        $objectify = new ObjectifyString("world");
+        $this->assertSame("-=- world -=-", $objectify->pad($objectify->length() + 10, " -=- ", STR_PAD_BOTH)->trim()->getValue());
+    }
+
+    public function testRepeat()
+    {
+        $objectify = new ObjectifyString("=+=");
+        $this->assertSame("=+==+==+==+==+=", $objectify->repeat(5)->getValue());
+
+        $objectify = new ObjectifyString("p v p");
+        $this->assertSame("p vvv p", $objectify->repeat(3, 2)->getValue());
+    }
+
+    public function testReplace()
+    {
+        $objectify = new ObjectifyString("it's a part");
+        $this->assertSame("it's a trap", $objectify->replace('part', 'trap')->getValue());
+    }
+
+    public function testReplaceWith()
+    {
+        $objectify = new ObjectifyString("it's a part");
+        $this->assertSame("it's a trap", $objectify->replaceWith('trap', '-4..')->getValue());
+    }
 }

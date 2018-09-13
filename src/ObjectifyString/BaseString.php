@@ -170,11 +170,14 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
     protected function processNonSequenceCall(callable $callback, $parameters = [], $return = false)
     {
         if ($parameters) {
-            array_unshift($parameters, $this->value);
+            if (isset($parameters['value'])) {
+                $parameters['value'] = $this->value;
+            } else {
+                array_unshift($parameters, $this->value);
+            }
         } else {
             $parameters = [$this->value];
         }
-
         $result = call_user_func_array($callback, $parameters);
 
         if (!$return) {
