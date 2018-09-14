@@ -24,6 +24,7 @@ class ObjectifyStringTest extends TestCase
         $objectify = new ObjectifyString("revolution");
         $this->assertSame("", $objectify->slice()->getValue());
         $this->assertSame("ev", $objectify("revolution")->slice(1, 2)->getValue());
+        $this->assertSame("vo", $objectify("revolution")->slice('2..3')->getValue());
 
     }
 

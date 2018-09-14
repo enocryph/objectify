@@ -48,8 +48,6 @@ class StringScissors implements ScissorsInterface, RegexScissorsInterface
     public function normalCut(ObjectifyInterface $objectify, NumericSequenceInterface $sequence): SeparatedInterface
     {
         $separated = new Separated();
-        $separated->setBeginning(substr($objectify->getValue(), 0, $sequence->getFrom()));
-        $separated->setMiddle(substr($objectify->getValue(), $sequence->getFrom(), $sequence->getLength() ?? strlen($objectify->getValue())));
 
         if ($sequence->getLength() < 0 && $sequence->getFrom() < 0 && $sequence->getFrom() >= $sequence->getLength()) {
             $separated->setBeginning('');
@@ -58,11 +56,19 @@ class StringScissors implements ScissorsInterface, RegexScissorsInterface
             return $separated;
         }
 
-        if (!endsWith($objectify->getValue(), $separated->getMiddle())) {
+        $stringLength = strlen($objectify->getValue());
+
+        $separated->setBeginning(substr($objectify->getValue(), 0, $sequence->getFrom()));
+
+        $cutLength = $sequence->getLength() ?? $stringLength;
+
+        $separated->setMiddle(substr($objectify->getValue(), $sequence->getFrom(), $cutLength));
+
+        if (!(strlen($separated->getBeginning()) + strlen($separated->getMiddle()) === $stringLength)) {
             if ($sequence->getLength() < 0 && $sequence->getFrom() > $sequence->getLength()) {
                 $separated->setEnding(substr($objectify->getValue(), $sequence->getLength()));
             } elseif ($sequence->getLength() < 0 && $sequence->getFrom() < 0 && $sequence->getFrom() < $sequence->getLength()) {
-                $separated->setEnding(substr($objectify->getValue(), $sequence->getLength(), strlen($objectify->getValue())));
+                $separated->setEnding(substr($objectify->getValue(), $sequence->getLength(), $stringLength));
             } else {
                 $separated->setEnding(substr($objectify->getValue(), $sequence->getFrom() + $sequence->getLength()));
             }
