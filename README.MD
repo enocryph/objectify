@@ -96,6 +96,6 @@ $objectify->append("'", 1)->reverse('-3..')->append('!')->uppercase('..4');
 ### The sequence explanation with pictures
 
 
-[1]: 'http://ruby-doc.org/core-2.2.0/String.html#method-i-slice'
-[2]: 'https://github.com/enocryph/objectify'
+[1]: http://ruby-doc.org/core-2.2.0/String.html#method-i-slice
+[2]: https://github.com/enocryph/objectify
 [3]: https://getcomposer.org/
