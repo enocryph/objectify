@@ -13,11 +13,6 @@ use Objectify\Interfaces\ObjectifyInterface;
 class ObjectifyString extends BaseString implements ObjectifyInterface
 {
     /**
-     * @var string
-     */
-    const FUNCTIONS_NAMESPACE = "\Objectify\ObjectifyString\\";
-
-    /**
      * Make a string uppercase
      *
      * @see strtoupper()
@@ -67,6 +62,9 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
+     * Make a string's first character lowercase
+     *
+     * @see lcfirst()
      * @param mixed ...$sequence
      * @return $this
      */
@@ -112,7 +110,46 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
-     * Reverse string or string part with sequence
+     * Alias trim()
+     * Trim string or string part with sequence
+     *
+     * @see trim()
+     * @param mixed ...$sequence
+     * @return ObjectifyString
+     */
+    public function strip(...$sequence)
+    {
+        return $this->processAliasCall('trim', $sequence);
+    }
+
+    /**
+     * Alias ltrim()
+     * Left trim string or string part with sequence
+     *
+     * @see ltrim()
+     * @param mixed ...$sequence
+     * @return ObjectifyString
+     */
+    public function stripLeft(...$sequence)
+    {
+        return $this->processAliasCall('ltrim', $sequence);
+    }
+
+    /**
+     * Alias rtrim()
+     * Right trim string or string part with sequence
+     *
+     * @see rtrim()
+     * @param mixed ...$sequence
+     * @return ObjectifyString
+     */
+    public function stripRight(...$sequence)
+    {
+        return $this->processAliasCall('rtrim', $sequence);
+    }
+
+    /**
+     * Reverse string
      *
      * @see strrev()
      * @param mixed ...$sequence
@@ -124,9 +161,9 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
-     * Shuffle string or string part with sequence
+     * Shuffle string
      *
-     * @see strrev()
+     * @see str_shuffle()
      * @param mixed ...$sequence
      * @return ObjectifyString
      * @codeCoverageIgnore
@@ -148,6 +185,9 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
+     * Return part of a string
+     *
+     * @see substr()
      * @param mixed ...$sequence
      * @return mixed|BaseString
      */
@@ -157,30 +197,36 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
+     * Check string starts with
+     *
      * @param $string
-     * @param bool $caseInsensitive
+     * @param bool $caseSensitive
      * @param mixed ...$sequence
      * @return boolean
      */
-    public function startsWith($string, $caseInsensitive = false, ...$sequence)
+    public function startsWith($string, $caseSensitive = true, ...$sequence)
     {
-        $function = $caseInsensitive ? 'startsWithCaseInsensitive' : 'startsWith';
+        $function = $caseSensitive ? 'startsWith' : 'startsWithCaseInsensitive';
         return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . $function, [$string], self::SEPARATED, true);
     }
 
     /**
+     * Check string ends with
+     *
      * @param $string
-     * @param bool $caseInsensitive
+     * @param bool $caseSensitive
      * @param mixed ...$sequence
      * @return boolean
      */
-    public function endsWith($string, $caseInsensitive = false, ...$sequence)
+    public function endsWith($string, $caseSensitive = true, ...$sequence)
     {
-        $function = $caseInsensitive ? 'endsWithCaseInsensitive' : 'endsWith';
+        $function = $caseSensitive ? 'endsWith' : 'endsWithCaseInsensitive';
         return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . $function, [$string], self::SEPARATED, true);
     }
 
     /**
+     * Insert string to the end
+     *
      * @param $string
      * @param mixed ...$sequence
      * @return $this
@@ -191,6 +237,8 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
+     * Insert string to the beginning
+     *
      * @param $string
      * @param mixed ...$sequence
      * @return $this
@@ -201,6 +249,8 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
+     * Insert string to the both sides
+     *
      * @param $string
      * @param mixed ...$sequence
      * @return $this
@@ -211,6 +261,9 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
+     * Pad a string to a certain length with another string
+     *
+     * @see str_pad()
      * @param $length
      * @param string $pad
      * @param int $type can be STR_PAD_RIGHT | STR_PAD_LEFT | STR_PAD_BOTH
@@ -290,6 +343,8 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
+     * Find the position of the occurrence of a substring in a string
+     *
      * @param $needle
      * @param int $offset
      * @param bool $caseSensitive
@@ -304,6 +359,8 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
+     * Wraps a string to a given number of characters
+     *
      * @param $width
      * @param $break
      * @param $cut

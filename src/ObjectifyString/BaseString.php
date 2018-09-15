@@ -19,6 +19,11 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
     /**
      * @var string
      */
+    const FUNCTIONS_NAMESPACE = "\Objectify\ObjectifyString\\";
+
+    /**
+     * @var string
+     */
     protected $value;
 
     /**
@@ -185,5 +190,16 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
         }
 
         return $return ? $result : $this;
+    }
+
+    /**
+     * @param $function
+     * @param $parameters
+     * @return $this
+     */
+    protected function processAliasCall($function, $parameters)
+    {
+        call_user_func_array([$this, $function], $parameters);
+        return $this;
     }
 }

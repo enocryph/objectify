@@ -133,7 +133,7 @@ $objectify->uppercase();
 Result: `Hello World!`
 
 ### lowercase
-> Associated with [`lowercase`][103].
+> Associated with [`strtolower`][103].
 
 ``` php
 $objectify = new ObjectifyString("Hello World!");
@@ -142,14 +142,263 @@ $objectify->lowercase();
 
 Result: `hello world!`
 
+### lowercaseFirst
+> Associated with [`lcfirst`][104].
+
+``` php
+$objectify = new ObjectifyString("HELLO World!");
+$objectify->lowercaseFirst();
+```
+
+Result: `hELLO world!`
+
+### trim
+> Available alias : `strip`
+
+> Associated with [`trim`][105].
+
+``` php
+$objectify = new ObjectifyString("  Hello World!  ");
+$objectify->trim();
+```
+
+Result: `Hello World!`
+
+### ltrim
+> Available alias : `stripLeft`
+
+> Associated with [`ltrim`][106].
+
+``` php
+$objectify = new ObjectifyString("  Hello World!  ");
+$objectify->ltrim();
+```
+
+Result: `"Hello World!  "`
+
+### rtrim
+> Available alias : `stripRight`
+
+> Associated with [`rtrim`][107].
+
+``` php
+$objectify = new ObjectifyString("  Hello World!  ");
+$objectify->rtrim();
+```
+
+Result: `"  Hello World!"`
 
 ### reverse
-> Associated with `strrev`.
+> Associated with [`strrev`][108].
 
 ``` php
 $objectify = new ObjectifyString("trap");
-$objectify->reverse(); // part
+$objectify->reverse();
 ```
+
+Result: `part`
+
+### shuffle
+> Associated with [`str_shuffle`][109].
+
+``` php
+$objectify = new ObjectifyString("trap");
+$objectify->shuffle();
+```
+
+Result: random shuffle :)
+
+### length
+> Associated with [`strlen`][110].
+
+``` php
+$objectify = new ObjectifyString("trap");
+$objectify->length();
+```
+
+Result: 4
+
+### slice
+> Associated with [`substr`][111].
+
+``` php
+$objectify = new ObjectifyString("check chapter about sequence");
+$objectify->slice("-8..");
+```
+
+Result: `sequence`
+
+### pad
+> Associated with [`str_pad`][112].
+
+``` php
+$objectify = new ObjectifyString("world");
+$objectify->pad($objectify->length() + 10, " -=- ", STR_PAD_BOTH)->trim();
+```
+
+Result: `-=- world -=-`
+
+### repeat
+> Associated with [`str_repeat`][113].
+
+``` php
+$objectify = new ObjectifyString("=+=");
+$objectify->repeat(5);
+```
+
+Result: `=+==+==+==+==+=`
+
+### replace
+> Associated with [`str_replace`][114].
+
+> Associated with [`str_ireplace`][115].
+
+```php 
+$this replace(string $search, string $replace[, boolean $caseSensitive = true, ...$sequence])
+```
+
+``` php
+$objectify = new ObjectifyString("<body text=%BODY%>");
+$objectify->replace('%body%', 'black');
+```
+
+Result: `<body text=black>`
+
+### replaceWith
+> Associated with [`substr_replace`][116].
+
+```php 
+$this replaceWith(string $replacement[, ...$sequence])
+```
+
+``` php
+$objectify = new ObjectifyString("it's a part");
+$objectify->replaceWith('trap', '-4..');
+```
+
+Result: `it's a trap`
+
+### split
+> Associated with [`str_split`][117].
+
+``` php
+$objectify = new ObjectifyString("Hello Friend");
+$objectify->split();
+```
+
+Result: `['H', 'e', 'l', 'l', 'o', ' ', 'F', 'r', 'i', 'e', 'n', 'd']`
+
+### compareWith
+> Associated with [`strcmp`][118].
+
+> Associated with [`strcasecmp`][119].
+
+```php 
+integer compareWith(string $string [, boolean $caseSensitive = true, ...$sequence])
+```
+
+``` php
+$objectify = new ObjectifyString("hello");
+$objectify->compareWith("hello");
+```
+
+Result: `0`
+
+### position
+> Associated with [`strrpos`][120].
+
+> Associated with [`strripos`][121].
+
+> Associated with [`strpos`][122].
+
+> Associated with [`stripos`][123].
+
+```php 
+integer|boolean position(string $needle[, integer $offset = 10, boolean $caseSensitive = true, boolean $fromEnd = false , ...$sequence])
+```
+
+``` php
+$objectify = new ObjectifyString("hello");
+$objectify->position("l");
+```
+
+Result: `2`
+
+### wordwrap
+> Associated with [`wordwrap`][124].
+
+``` php
+$objectify = new ObjectifyString("The quick brown fox jumped over the lazy dog.");
+$objectify->split();
+```
+
+Result: `['H', 'e', 'l', 'l', 'o', ' ', 'F', 'r', 'i', 'e', 'n', 'd']`
+
+### startsWith
+
+```php 
+boolean startsWith(string $string[, boolean $caseSensitive = true, ...$sequence])
+```
+
+``` php
+$objectify = new ObjectifyString("hello world!");
+$objectify->startsWith("hel");
+```
+
+Result: `true`
+
+### endsWith
+
+```php 
+boolean endsWith(string $string[, boolean $caseSensitive = true, ...$sequence])
+```
+
+``` php
+$objectify = new ObjectifyString("hello world!");
+$objectify->endsWith("hel");
+```
+
+Result: `false`
+
+### append
+
+```php 
+$this append(string $string[, ...$sequence])
+```
+
+``` php
+$objectify = new ObjectifyString("hello");
+$objectify->append(" world!");
+```
+
+Result: `hello world!`
+
+### prepend
+
+```php 
+$this prepend(string $string[, ...$sequence])
+```
+
+``` php
+$objectify = new ObjectifyString("world!");
+$objectify->prepend("hello ");
+```
+
+Result: `hello world!`
+
+### appendBoth
+
+```php 
+$this appendBoth(string $string[, ...$sequence])
+```
+
+``` php
+$objectify = new ObjectifyString("Hello World");
+$objectify->appendBoth("!");
+```
+
+Result: `!Hello World!`
+
 
 [1]: http://ruby-doc.org/core-2.2.0/String.html#method-i-slice
 [2]: https://github.com/enocryph/objectify
@@ -159,3 +408,24 @@ $objectify->reverse(); // part
 [101]: http://php.net/manual/en/function.ucfirst.php
 [102]: http://php.net/manual/en/function.ucwords.php
 [103]: http://php.net/manual/en/function.strtolower.php
+[104]: http://php.net/manual/en/function.lcfirst.php
+[105]: http://php.net/manual/en/function.trim.php
+[106]: http://php.net/manual/en/function.ltrim.php
+[107]: http://php.net/manual/en/function.rtrim.php
+[108]: http://php.net/manual/en/function.strrev.php
+[109]: http://php.net/manual/en/function.str-shuffle.php
+[110]: http://php.net/manual/en/function.length.php
+[111]: http://php.net/manual/en/function.substr.php
+[112]: http://php.net/manual/en/function.str-pad.php
+[113]: http://php.net/manual/en/function.str-repeat.php
+[114]: http://php.net/manual/en/function.str-replace.php
+[115]: http://php.net/manual/en/function.str-ireplace.php
+[116]: http://php.net/manual/en/function.substr-replace.php
+[117]: http://php.net/manual/ru/function.str-split.php
+[118]: http://php.net/manual/ru/function.strcmp.php
+[119]: http://php.net/manual/ru/function.strcasecmp.php
+[120]: http://php.net/manual/ru/function.strrpos.php
+[121]: http://php.net/manual/ru/function.strripos.php
+[122]: http://php.net/manual/ru/function.strpos.php
+[123]: http://php.net/manual/ru/function.stripos.php
+[124]: http://php.net/manual/ru/function.wordwrap.php

@@ -32,6 +32,7 @@ class ObjectifyStringTest extends TestCase
     {
         $objectify = new ObjectifyString("     revolution     ");
         $this->assertSame("revolution", $objectify->trim()->getValue());
+        $this->assertSame("revolution", $objectify->strip()->getValue());
     }
 
     public function testUppercase()
@@ -50,18 +51,22 @@ class ObjectifyStringTest extends TestCase
     {
         $objectify = new ObjectifyString("     revolution  ");
         $this->assertSame("revolution  ", $objectify->ltrim()->getValue());
+        $this->assertSame("revolution  ", $objectify->stripLeft()->getValue());
 
         $objectify = new ObjectifyString("revol       ution  ");
         $this->assertSame("revolution  ", $objectify->ltrim('5..')->getValue());
+        $this->assertSame("revolution  ", $objectify->stripLeft('5..')->getValue());
     }
 
     public function testRightTrim()
     {
         $objectify = new ObjectifyString(" revolution  ");
         $this->assertSame(" revolution", $objectify->rtrim()->getValue());
+        $this->assertSame(" revolution", $objectify->stripRight()->getValue());
 
         $objectify = new ObjectifyString("revol       ution");
         $this->assertSame("revolution", $objectify->rtrim('0..-5')->getValue());
+        $this->assertSame("revolution", $objectify->stripRight('0..-5')->getValue());
     }
 
     public function testReverse()
@@ -81,17 +86,17 @@ class ObjectifyStringTest extends TestCase
         $objectify = new ObjectifyString("hello world!");
         $this->assertSame(true, $objectify->startsWith('hel'));
         $this->assertSame(true, $objectify->startsWith('wo', false, '-6..'));
-        $this->assertSame(true, $objectify->startsWith('l', false, '2..4'));
-        $this->assertSame(true, $objectify->startsWith('L', true, '2..4'));
+        $this->assertSame(true, $objectify->startsWith('l', true, '2..4'));
+        $this->assertSame(true, $objectify->startsWith('L', false, '2..4'));
     }
 
     public function testEndsWith()
     {
         $objectify = new ObjectifyString("hello world!");
         $this->assertSame(true, $objectify->endsWith('ld!'));
-        $this->assertSame(true, $objectify->endsWith('ld!', false, '-6..'));
-        $this->assertSame(true, $objectify->endsWith('lo', false, '..4'));
-        $this->assertSame(true, $objectify->endsWith('LO', true, '..4'));
+        $this->assertSame(true, $objectify->endsWith('ld!', true, '-6..'));
+        $this->assertSame(true, $objectify->endsWith('lo', true, '..4'));
+        $this->assertSame(true, $objectify->endsWith('LO', false, '..4'));
     }
 
     public function testAppend()
