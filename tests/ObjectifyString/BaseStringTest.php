@@ -72,4 +72,11 @@ class BaseStringTest extends TestCase
         $this->assertSame(true, isset($objectify[0]));
         $this->assertSame(false, isset($objectify[6]));
     }
+
+    public function testImplode()
+    {
+        $objectify = ObjectifyString::implode("", ["h", "e", "l", "l", "o"]);
+        $this->assertSame(ObjectifyString::class,  get_class($objectify));
+        $this->assertSame("hello",  $objectify->getValue());
+    }
 }
