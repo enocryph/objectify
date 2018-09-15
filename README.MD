@@ -61,6 +61,22 @@ $ composer require enocryph/objectify
 
 ## Usage
 
+Create instance of ObjectifyString class, passing string to constructor, or array to static implode method
+
+```php
+use Objectify\ObjectifyString\ObjectifyString;
+
+$objectify = new ObjecifyString("example");
+$objectify = ObjectifyString::implode(["e", "x", "a", "m", "p", "l", "e"]);
+```
+
+Use method [`getValue()`](#get-value) to get a string
+
+```php
+$objectify = new ObjecifyString("example");
+echo strlen($objectify->getValue()); // 7
+```
+
 ```php
 use Objectify\ObjectifyString\ObjectifyString;
 
@@ -119,17 +135,20 @@ Okay, let's use `slice` function for example.
 slice(...$sequence)
 ```
 
-If passed a single *index* `slice(1) or slice('1')`, returns a substring of one character at that index.
+1. If passed a single *index* `slice(1) or slice('1')`, returns a substring of one character at that index.
 
-If passed a start *index* and a *length* `slice(2, 3) or slice('2, 3')`, returns a substring containing length 
+2. If passed a start *index* and a *length* `slice(2, 3) or slice('2, 3')`, returns a substring containing length 
 characters starting at the index.
 
-If passed a *range* `slice('2..3')`, its beginning and end are interpreted as offsets delimiting the substring 
+3. If passed a *range* `slice('2..3')`, its beginning and end are interpreted as offsets delimiting the substring 
 to be returned.
 
-**Regex now is not supported :(**
+4. **Regex now is not supported :(**
 
-But in [objectify][2] library you can use the sequence with most functions, not only with slice.
+**But in [objectify][2] library you can use the sequence with most functions, not only with slice.**
+
+Sequence in [objectify][2] library always used as the last parameter of the method, php 7 provides `...$var` construction
+to access variable arguments. That allows use sequence as one, or more parameters (like in examples above), as you wish. 
 
 #### Examples with the sequence: 
 
@@ -142,15 +161,31 @@ $objectify->append("'", 1); // it's a pit
 $objectify->reverse('-3..'); // it's a tip
 $objectify->append('!'); // it's a tip!
 $objectify->uppercase('..4'); // IT'S a tip!
-```
 
-With chaining:
+// or chained
 
-```php
 $objectify->append("'", 1)->reverse('-3..')->append('!')->uppercase('..4');
 ```
 
 ## Methods
+
+### ::implode
+> Associated with [`implode`][125].
+
+```php 
+$this implode(string $glue, array $pieces)
+```
+
+``` php
+$objectify = ObjectifyString::implode("", ["h", "e", "l", "l", "o"])
+```
+
+### get value
+
+``` php
+$objectify = ObjectifyString::implode("", ["h", "e", "l", "l", "o"])
+$objectify->getValue(); // hello
+```
 
 ### uppercase
 > Associated with [`strtoupper`][100].
@@ -479,3 +514,4 @@ Result: `!Hello World!`
 [122]: http://php.net/manual/ru/function.strpos.php
 [123]: http://php.net/manual/ru/function.stripos.php
 [124]: http://php.net/manual/ru/function.wordwrap.php
+[125]: http://php.net/manual/ru/function.implode.php
