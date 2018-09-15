@@ -13,8 +13,10 @@ Object wrapper for PHP string. Allows manipulate strings in an object-oriented s
 * [Installation](#installation)
 * [Usage](#usage)
     * [Chaining](#chaining)
+    * [Using sequence](#using-sequence)
 * [Sequence](#sequence)
     * [What is the sequence](#what-is-the-sequence)
+    * [Types](#types)
     * [How does it work?](#how-does-it-work)
     * [Examples](#examples-with-the-sequence)
     * [Explanation](#explanation)
@@ -65,7 +67,7 @@ use Objectify\ObjectifyString\ObjectifyString;
 $objectify = new ObjecifyString("pu level");
 $objectify->reverse(); // level up
 $objectify->append('!'); // level up!
-$objectify->uppercase(0); // Level up!
+$objectify->uppercaseFirst(); // Level up!
 ```
 
 ### Chaining
@@ -76,7 +78,24 @@ Methods may be chained for ease of use:
 use Objectify\ObjectifyString\ObjectifyString;
 
 $objectify = new ObjecifyString("pu level");
-$objectify->reverse()->append('!')->uppercase(0); // Level up!
+$objectify->reverse()->append('!')->uppercaseFirst(); // Level up!
+```
+
+### Using [Sequence](#sequence)
+
+```php
+use Objectify\ObjectifyString\ObjectifyString;
+
+$objectify = new ObjectifyString("its a pit");
+
+$objectify->append("'", 1); // it's a pit
+$objectify->reverse('-3..'); // it's a tip
+$objectify->append('!'); // it's a tip!
+$objectify->uppercase('..4'); // IT'S a tip!
+
+//or chained
+
+$objectify->append("'", 1)->reverse('-3..')->append('!')->uppercase('..4');
 ```
 
 ## Sequence
@@ -84,6 +103,13 @@ $objectify->reverse()->append('!')->uppercase(0); // Level up!
 ### What is the sequence?
 
 Sequence is [ruby style element reference][1] that allows you manipulate with a part(s) of string. 
+
+### Types
+
+1. Index
+2. Start, length
+3. Range
+4. Regex, match group
 
 ### How does it work?
 
@@ -103,12 +129,14 @@ to be returned.
 
 **Regex now is not supported :(**
 
-But in [objectify][2] library you can use the sequence with most functions, not only with slice. (See: list of functions that supports the sequence).
+But in [objectify][2] library you can use the sequence with most functions, not only with slice.
 
 #### Examples with the sequence: 
 
 ```php
-$objectify = new A("its a pit");
+use Objectify\ObjectifyString\ObjectifyString;
+
+$objectify = new ObjectifyString("its a pit");
 
 $objectify->append("'", 1); // it's a pit
 $objectify->reverse('-3..'); // it's a tip
@@ -121,8 +149,6 @@ With chaining:
 ```php
 $objectify->append("'", 1)->reverse('-3..')->append('!')->uppercase('..4');
 ```
-
-### Explanation
 
 ## Methods
 
