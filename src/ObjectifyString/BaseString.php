@@ -36,6 +36,21 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
     }
 
     /**
+     * Join array elements with a string
+     *
+     * @see implode()
+     * @param $glue
+     * @param $pieces
+     * @return BaseString
+     */
+    public static function implode($glue, $pieces)
+    {
+        $value = implode($glue, $pieces);
+        $objectify = new static($value);
+        return $objectify;
+    }
+
+    /**
      * @return string
      */
     public function getValue()
