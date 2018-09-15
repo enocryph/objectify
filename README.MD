@@ -180,7 +180,7 @@ $this implode(string $glue, array $pieces)
 $objectify = ObjectifyString::implode("", ["h", "e", "l", "l", "o"])
 ```
 
-### get value
+### getValue
 
 ``` php
 $objectify = ObjectifyString::implode("", ["h", "e", "l", "l", "o"])

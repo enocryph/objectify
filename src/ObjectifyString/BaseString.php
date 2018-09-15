@@ -41,7 +41,7 @@ class BaseString implements ObjectifyInterface, \Countable, \ArrayAccess
      * @see implode()
      * @param $glue
      * @param $pieces
-     * @return BaseString
+     * @return static
      */
     public static function implode($glue, $pieces)
     {
