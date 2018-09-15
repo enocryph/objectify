@@ -134,11 +134,72 @@ class ObjectifyStringTest extends TestCase
     {
         $objectify = new ObjectifyString("it's a part");
         $this->assertSame("it's a trap", $objectify->replace('part', 'trap')->getValue());
+        $objectify("<body text=%BODY%>");
+        $this->assertSame("<body text=black>", $objectify->replace('%body%', 'black', false)->getValue());
     }
 
     public function testReplaceWith()
     {
         $objectify = new ObjectifyString("it's a part");
         $this->assertSame("it's a trap", $objectify->replaceWith('trap', '-4..')->getValue());
+    }
+
+    public function testSplit()
+    {
+        $string = "abcdef";
+        $objectify = new ObjectifyString($string);
+        $this->assertSame(str_split($string), $objectify->split());
+    }
+
+    public function testCompareWith()
+    {
+        $string = "Hello";
+        $compare = "hello";
+        $objectify = new ObjectifyString($string);
+        $this->assertSame(strcmp($string, $compare), $objectify->compareWith($compare));
+        $this->assertSame(strcasecmp($string, $compare), $objectify->compareWith($compare, false));
+    }
+
+    public function testPosition()
+    {
+        $string = "there Is no knowledge that is not power";
+        $needle = "is";
+        $objectify = new ObjectifyString($string);
+        $this->assertSame(strpos($string, $needle), $objectify->position($needle));
+        $this->assertSame(strpos($string, $needle, 10), $objectify->position($needle, 10));
+
+        $this->assertSame(stripos($string, $needle), $objectify->position($needle, 0, false));
+        $this->assertSame(stripos($string, $needle, 10), $objectify->position($needle, 10, false));
+
+        $this->assertSame(strrpos($string, $needle), $objectify->position($needle, 0, true, true));
+        $this->assertSame(strrpos($string, $needle, 10), $objectify->position($needle, 10, true, true));
+
+        $this->assertSame(strripos($string, $needle), $objectify->position($needle, 0, false, true));
+        $this->assertSame(strripos($string, $needle, 10), $objectify->position($needle, 10, false, true));
+    }
+
+    public function testUppercaseFirst()
+    {
+        $objectify = new ObjectifyString("word");
+        $this->assertSame("Word", $objectify->uppercaseFirst()->getValue());
+    }
+
+    public function testUppercaseWords()
+    {
+        $objectify = new ObjectifyString("hope is the prison");
+        $this->assertSame("Hope Is The Prison", $objectify->uppercaseWords()->getValue());
+    }
+
+    public function testLowercaseFirst()
+    {
+        $objectify = new ObjectifyString("Hope is the prison");
+        $this->assertSame("hope is the prison", $objectify->lowercaseFirst()->getValue());
+    }
+
+    public function testWordWrap()
+    {
+        $text = "The quick brown fox jumped over the lazy dog.";
+        $objectify = new ObjectifyString($text);
+        $this->assertSame(wordwrap($text, 20), $objectify->wordwrap(20)->getValue());
     }
 }

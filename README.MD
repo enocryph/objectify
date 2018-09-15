@@ -14,7 +14,12 @@ Object wrapper for PHP string. Allows manipulate strings in an object-oriented s
 * [Usage](#usage)
     * [Chaining](#chaining)
 * [Sequence](#sequence)
-    
+    * [What is the sequence](#what-is-the-sequence)
+    * [How does it work?](#how-does-it-work)
+    * [Examples](#examples-with-the-sequence)
+    * [Explanation](#explanation)
+* [Methods](#methods)
+    * [Reverse](#reverse)
 
 ## Requirements
 
@@ -56,7 +61,7 @@ $objectify->reverse()->append('!')->uppercase(0); // Level up!
 
 Sequence is [ruby style element reference][1] that allows you manipulate with a part(s) of string. 
 
-### Okay, so how does it work?
+### How does it work?
 
 Okay, let's use `slice` function for example.
 
@@ -74,9 +79,9 @@ to be returned.
 
 **Regex now is not supported :(**
 
-But in [objectify][2] library you can use the sequence in most functions. (See: list of functions that supports the sequence).
+But in [objectify][2] library you can use the sequence with most functions, not only with slice. (See: list of functions that supports the sequence).
 
-Some examples with the sequence: 
+#### Examples with the sequence: 
 
 ```php
 $objectify = new A("its a pit");
@@ -93,9 +98,64 @@ With chaining:
 $objectify->append("'", 1)->reverse('-3..')->append('!')->uppercase('..4');
 ```
 
-### The sequence explanation with pictures
+### Explanation
 
+## Methods
+
+### uppercase
+> Associated with [`strtoupper`][100].
+
+``` php
+$objectify = new ObjectifyString("Hello World!");
+$objectify->uppercase();
+```
+
+Result: `HELLO WORLD!`
+
+### uppercaseFirst
+> Associated with [`ucfirst`][101].
+
+``` php
+$objectify = new ObjectifyString("hello world!");
+$objectify->uppercase();
+```
+
+Result: `Hello world!`
+
+### uppercaseWords
+> Associated with [`ucwords`][102].
+
+``` php
+$objectify = new ObjectifyString("hello world!");
+$objectify->uppercase();
+```
+
+Result: `Hello World!`
+
+### lowercase
+> Associated with [`lowercase`][103].
+
+``` php
+$objectify = new ObjectifyString("Hello World!");
+$objectify->lowercase();
+```
+
+Result: `hello world!`
+
+
+### reverse
+> Associated with `strrev`.
+
+``` php
+$objectify = new ObjectifyString("trap");
+$objectify->reverse(); // part
+```
 
 [1]: http://ruby-doc.org/core-2.2.0/String.html#method-i-slice
 [2]: https://github.com/enocryph/objectify
 [3]: https://getcomposer.org/
+
+[100]: http://php.net/manual/en/function.strtoupper.php
+[101]: http://php.net/manual/en/function.ucfirst.php
+[102]: http://php.net/manual/en/function.ucwords.php
+[103]: http://php.net/manual/en/function.strtolower.php

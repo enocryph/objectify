@@ -4,7 +4,6 @@
 namespace Objectify\ObjectifyString;
 
 use Objectify\Interfaces\ObjectifyInterface;
-use phpDocumentor\Reflection\Types\This;
 
 /**
  * Class ObjectifyString
@@ -19,8 +18,9 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     const FUNCTIONS_NAMESPACE = "\Objectify\ObjectifyString\\";
 
     /**
-     * Make a string or string part with sequence uppercase
+     * Make a string uppercase
      *
+     * @see strtoupper()
      * @param mixed ...$sequence
      * @return ObjectifyString
      */
@@ -30,7 +30,32 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
-     * Make a string or string part with sequence lowercase
+     * Make a string's first character uppercase
+     *
+     * @see ucfirst()
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function uppercaseFirst(...$sequence)
+    {
+        return $this->processCall($sequence, 'ucfirst');
+    }
+
+    /**
+     * Uppercase the first character of each word in a string
+     *
+     * @see ucwords()
+     * @param mixed $delimiters
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function uppercaseWords($delimiters = " \t\r\n\f\v", ...$sequence)
+    {
+        return $this->processCall($sequence, 'ucwords', [$delimiters]);
+    }
+
+    /**
+     * Make a string lowercase
      *
      * @see strtolower()
      * @param mixed ...$sequence
@@ -39,6 +64,15 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     public function lowercase(...$sequence)
     {
         return $this->processCall($sequence, 'strtolower');
+    }
+
+    /**
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function lowercaseFirst(...$sequence)
+    {
+        return $this->processCall($sequence, 'lcfirst');
     }
 
     /**
@@ -199,17 +233,25 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     }
 
     /**
+     * Replace all occurrences of the search string with the replacement string
+     *
+     * @see str_replace()
+     * @see str_ireplace()
      * @param $search
      * @param $replace
+     * @param $caseSensitive
      * @param mixed ...$sequence
      * @return $this
      */
-    public function replace($search, $replace, ...$sequence)
+    public function replace($search, $replace, $caseSensitive = true, ...$sequence)
     {
-        return $this->processCall($sequence, 'str_replace', [$search, $replace, 'value' => true]);
+        return $this->processCall($sequence, $caseSensitive ? 'str_replace' : 'str_ireplace', [$search, $replace, 'value' => true]);
     }
 
     /**
+     * Replace text within a portion of a string
+     *
+     * @see substr_replace()
      * @param $replacement
      * @param mixed ...$sequence
      * @return $this
@@ -217,5 +259,59 @@ class ObjectifyString extends BaseString implements ObjectifyInterface
     public function replaceWith($replacement, ...$sequence)
     {
         return $this->processCall($sequence, self::FUNCTIONS_NAMESPACE . 'fakeReplace', [$replacement]);
+    }
+
+    /**
+     * Convert a string to an array
+     *
+     * @see str_split()
+     * @param int $length
+     * @param mixed ...$sequence
+     * @return array
+     */
+    public function split($length = 1, ...$sequence)
+    {
+        return $this->processCall($sequence, 'str_split', [$length], self::SEPARATED, true);
+    }
+
+    /**
+     * Binary safe string comparison
+     *
+     * @see strcmp()
+     * @see strcasecmp()
+     * @param $string
+     * @param bool $caseSensitive
+     * @param mixed ...$sequence
+     * @return int
+     */
+    public function compareWith($string, $caseSensitive = true, ...$sequence)
+    {
+        return $this->processCall($sequence, $caseSensitive ? 'strcmp' : 'strcasecmp', [$string], self::SEPARATED, true);
+    }
+
+    /**
+     * @param $needle
+     * @param int $offset
+     * @param bool $caseSensitive
+     * @param bool $fromEnd
+     * @param mixed ...$sequence
+     * @return int|bool
+     */
+    public function position($needle, $offset = 0, $caseSensitive = true, $fromEnd = false, ...$sequence)
+    {
+        $function = $fromEnd ? $caseSensitive ? 'strrpos' : 'strripos' : $caseSensitive ? 'strpos' : 'stripos';
+        return $this->processCall($sequence, $function, [$needle, $offset], self::SEPARATED, true);
+    }
+
+    /**
+     * @param $width
+     * @param $break
+     * @param $cut
+     * @param mixed ...$sequence
+     * @return $this
+     */
+    public function wordwrap($width = 75, $break = "\n", $cut = false, ...$sequence)
+    {
+        return $this->processCall($sequence, 'wordwrap', [$width, $break, $cut], self::SEPARATED);
     }
 }
