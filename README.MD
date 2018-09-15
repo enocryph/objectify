@@ -21,6 +21,8 @@ Object wrapper for PHP string. Allows manipulate strings in an object-oriented s
     * [Examples](#examples-with-the-sequence)
     * [Explanation](#explanation)
 * [Methods](#methods)
+    * [Implode](#implode)
+    * [GetValue](#getvalue)
     * [Uppercase](#uppercase)
     * [UppercaseFirst](#uppercasefirst)
     * [UppercaseWords](#uppercasewords)
