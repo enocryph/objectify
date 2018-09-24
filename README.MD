@@ -8,6 +8,8 @@ Object wrapper for PHP string. Allows manipulate strings in an object-oriented s
 [![Latest Stable Version](https://poser.pugx.org/enocryph/objectify/v/stable)](https://packagist.org/packages/enocryph/objectify)
 [![License](https://poser.pugx.org/enocryph/objectify/license)](https://packagist.org/packages/enocryph/objectify)
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/8f069c1c-dc74-43d7-b1cb-c8fd404450a6/big.png)](https://insight.sensiolabs.com/projects/8f069c1c-dc74-43d7-b1cb-c8fd404450a6)
+
 # Contents
 * [Requirements](#requirements)
 * [Installation](#installation)
